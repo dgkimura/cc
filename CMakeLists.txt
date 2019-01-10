@@ -5,7 +5,7 @@ find_package(BISON)
 find_package(FLEX)
 
 bison_target(MyParser parser.y ${CMAKE_CURRENT_BINARY_DIR}/parser.c)
-flex_target(MyScanner tokens.l ${CMAKE_CURRENT_BINARY_DIR}/tokens.c)
+flex_target(MyScanner scanner.l ${CMAKE_CURRENT_BINARY_DIR}/scanner.c)
 add_flex_bison_dependency(MyScanner MyParser)
 
 include_directories(${CMAKE_BINARY_DIR})
