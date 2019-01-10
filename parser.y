@@ -29,27 +29,29 @@ void yyerror(const char *s);
 expr:
     INT expr
     {
-        printf("bison found an int: %d", $1);
+        printf("bison found an int: %d\n", $1);
     }
     | FLOAT expr
     {
-        printf("bison found an float: %f", $1);
+        printf("bison found an float: %f\n", $1);
     }
     | STRING expr
     {
-        printf("bison found an float: %s", $1);
+        printf("bison found a string: %s\n", $1);
+        free($1);
     }
     | INT
     {
-        printf("bison found an int: %d", $1);
+        printf("bison found an int: %d\n", $1);
     }
     | FLOAT
     {
-        printf("bison found an float: %f", $1);
+        printf("bison found an float: %f\n", $1);
     }
     | STRING
     {
-        printf("bison found an float: %s", $1);
+        printf("bison found a string: %s\n", $1);
+        free($1);
     }
     ;
 %%
