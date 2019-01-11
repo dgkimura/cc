@@ -14,44 +14,22 @@ void yyerror(const char *s);
 %union
 {
     int ival;
-    float fval;
-    char *sval;
 }
 
-%token <ival> INT
-%token <fval> FLOAT
-%token <sval> STRING
+%token <ival> INTEGER
 
 %%
 
 /* Gammar Rules */
 
 expr:
-    INT expr
+    INTEGER expr
     {
         printf("bison found an int: %d\n", $1);
     }
-    | FLOAT expr
-    {
-        printf("bison found an float: %f\n", $1);
-    }
-    | STRING expr
-    {
-        printf("bison found a string: %s\n", $1);
-        free($1);
-    }
-    | INT
+    | INTEGER
     {
         printf("bison found an int: %d\n", $1);
-    }
-    | FLOAT
-    {
-        printf("bison found an float: %f\n", $1);
-    }
-    | STRING
-    {
-        printf("bison found a string: %s\n", $1);
-        free($1);
     }
     ;
 %%
