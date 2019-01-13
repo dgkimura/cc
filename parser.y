@@ -22,22 +22,29 @@ struct node *create_binaryop_node(enum op op, struct node *lhs, struct node *rhs
     struct node *nptr;
 }
 
-%token <ival> INTEGER
+%token <ival> NUMBER
 
 %left GE
 
-%type <nptr> expr
+%type <nptr> statement expression
 
 %%
 
 /* Gammar Rules */
 
-expr:
-    | expr GE expr
+statement:
+    | expression ';'
+    {
+        $$ = $1;
+    }
+    ;
+
+expression:
+    | expression GE expression
     {
         $$ = create_binaryop_node(OP_GE, $1, $3);
     }
-    | INTEGER
+    | NUMBER
     {
         $$ = create_const_node($1);
     }
