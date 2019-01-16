@@ -35,14 +35,14 @@ struct node *create_binaryop_node(enum op op, struct node *lhs, struct node *rhs
 /* Gammar Rules */
 
 statement:
-    | expression ';'
+    expression ';'
     {
         $$ = $1;
     }
     ;
 
 expression:
-    | expression GE expression
+    expression GE expression
     {
         $$ = create_binaryop_node(OP_GE, $1, $3);
     }
@@ -50,7 +50,7 @@ expression:
     ;
 
 constant:
-    | INTEGER_CONSTANT
+    INTEGER_CONSTANT
     {
         $$ = create_const_node($1);
     }
