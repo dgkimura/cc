@@ -5,7 +5,7 @@ enum op
 
 enum type
 {
-    CONSTANT,
+    VALUE,
     OPERATOR
 };
 

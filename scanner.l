@@ -10,7 +10,7 @@ extern int yylex();
 %%
 
 [ \t\n]         ;
-[0-9]+          { yylval.ival = atoi(yytext); return NUMBER; }
+[0-9]+          { yylval.ival = atoi(yytext); return INTEGER_CONSTANT; }
 
 ">="            { return GE; }
 ";"             { return ';'; }

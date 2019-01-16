@@ -22,11 +22,13 @@ struct node *create_binaryop_node(enum op op, struct node *lhs, struct node *rhs
     struct node *nptr;
 }
 
-%token <ival> NUMBER
+%token <ival> INTEGER_CONSTANT
 
 %left GE
 
-%type <nptr> statement expression
+%type <nptr> statement
+             expression
+             constant
 
 %%
 
@@ -44,11 +46,16 @@ expression:
     {
         $$ = create_binaryop_node(OP_GE, $1, $3);
     }
-    | NUMBER
+    | constant
+    ;
+
+constant:
+    | INTEGER_CONSTANT
     {
         $$ = create_const_node($1);
     }
     ;
+
 %%
 
 /* Epilogue */
@@ -72,7 +79,7 @@ create_const_node(const int value)
 
     struct node *n = malloc(sizeof(struct node));
 
-    n->type = CONSTANT;
+    n->type = VALUE;
     n->constant.value = value;
     return n;
 }
