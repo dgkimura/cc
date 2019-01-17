@@ -9,6 +9,7 @@
 extern int yylex(); extern int yyparse();
 void yyerror(const char *s);
 
+struct node *create_variable_node(const char *value);
 struct node *create_const_node(const int value);
 
 struct node *create_binaryop_node(enum op op, struct node *lhs, struct node *rhs);
@@ -19,38 +20,34 @@ struct node *create_binaryop_node(enum op op, struct node *lhs, struct node *rhs
 %union
 {
     int ival;
+    char *sval;
     struct node *nptr;
 }
 
-%token <ival> INTEGER_CONSTANT
+%token <ival> integer_constant
+%token <sval> identifier
 
 %left GE
 
-%type <nptr> statement
-             expression
+%type <nptr> primary_expression
              constant
 
 %%
 
 /* Gammar Rules */
 
-statement:
-    expression ';'
+primary_expression:
+    identifier
     {
-        $$ = $1;
-    }
-    ;
-
-expression:
-    expression GE expression
-    {
-        $$ = create_binaryop_node(OP_GE, $1, $3);
+        $$ = create_variable_node($1);
     }
     | constant
+    /* TODO string */
+    /* TODO '(' expression ')' */
     ;
 
 constant:
-    INTEGER_CONSTANT
+    integer_constant
     {
         $$ = create_const_node($1);
     }
@@ -69,6 +66,16 @@ create_binaryop_node(enum op op, struct node *lhs, struct node *rhs)
     n->binaryop.lhs = lhs;
     n->binaryop.rhs = rhs;
 
+    return n;
+}
+
+struct node *
+create_variable_node(const char *value)
+{
+    printf("bison found an identifier: %s\n", value);
+
+    struct node *n = malloc(sizeof(struct node));
+    /* TODO: construct variable node */
     return n;
 }
 
