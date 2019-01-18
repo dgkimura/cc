@@ -13,7 +13,9 @@ extern int yylex();
 [0-9]+          { yylval.ival = atoi(yytext); return integer_constant; }
 [a-zA-Z]+       { yylval.sval = yytext; return identifier; }
 
-">="            { return GE; }
+"->"            { return POINTER_OP; }
+"++"            { return INCREMENT_OP; }
+"--"            { return DECREMENT_OP; }
 ";"             { return ';'; }
 
 %%

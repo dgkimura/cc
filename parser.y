@@ -27,14 +27,41 @@ struct node *create_binaryop_node(enum op op, struct node *lhs, struct node *rhs
 %token <ival> integer_constant
 %token <sval> identifier
 
-%left GE
+%left POINTER_OP
+      INCREMENT_OP
+      DECREMENT_OP
 
-%type <nptr> primary_expression
+%type <nptr> postfix_expression
+             primary_expression
              constant
 
 %%
 
 /* Gammar Rules */
+
+postfix_expression:
+    primary_expression
+    {
+        printf("bison found primary_expression\n");
+    }
+    /* TODO: postfix_expression '[' expression ']' */
+    /* TODO: postfix_expression '(' argument_expression_list ')' */
+    | postfix_expression '.' identifier
+    {
+        printf("bison found postfix_expression.%s\n", $3);
+    }
+    | postfix_expression POINTER_OP identifier
+    {
+        printf("bison found postfix_expression->%s\n", $3);
+    }
+    | postfix_expression INCREMENT_OP
+    {
+        printf("bison found postfix_expression++\n");
+    }
+    | postfix_expression DECREMENT_OP
+    {
+        printf("bison found postfix_expression--\n");
+    };
 
 primary_expression:
     identifier
@@ -50,8 +77,7 @@ constant:
     integer_constant
     {
         $$ = create_const_node($1);
-    }
-    ;
+    };
 
 %%
 
