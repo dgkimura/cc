@@ -27,17 +27,33 @@ struct node *create_binaryop_node(enum op op, struct node *lhs, struct node *rhs
 %token <ival> integer_constant
 %token <sval> identifier
 
-%left POINTER_OP
-      INCREMENT_OP
-      DECREMENT_OP
+%token POINTER_OP
+       INCREMENT_OP
+       DECREMENT_OP
 
-%type <nptr> postfix_expression
+%type <nptr> unary_expression
+             postfix_expression
              primary_expression
              constant
 
 %%
 
 /* Gammar Rules */
+
+unary_expression:
+    postfix_expression
+    | INCREMENT_OP unary_expression
+    {
+        printf("bison found ++unary_expression\n");
+    }
+    | DECREMENT_OP unary_expression
+    {
+        printf("bison found --unary_expression\n");
+    }
+    /* TODO unary_operator cast_expression */
+    /* TODO: 'sizeof' unary_expression */
+    /* TODO: 'sizeof' '(' type_name ')' */
+    ;
 
 postfix_expression:
     primary_expression
