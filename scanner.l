@@ -10,12 +10,27 @@ extern int yylex();
 %%
 
 [ \t\n]         ;
-[0-9]+          { yylval.ival = atoi(yytext); return integer_constant; }
-[a-zA-Z]+       { yylval.sval = yytext; return identifier; }
+"auto"          { return AUTO; }
+"char"          { return CHAR; }
+"const"         { return CONST; }
+"double"        { return DOUBLE; }
+"extern"        { return EXTERN; }
+"float"         { return FLOAT; }
+"int"           { return INT; }
+"long"          { return LONG; }
+"register"      { return REGISTER; }
+"short"         { return SHORT; }
+"signed"        { return SIGNED; }
+"static"        { return STATIC; }
+"typedef"       { return TYPEDEF; }
+"unsigned"      { return UNSIGNED; }
+"void"          { return VOID; }
+"volatile"      { return VOLATILE; }
 
-"->"            { return POINTER_OP; }
-"++"            { return INCREMENT_OP; }
-"--"            { return DECREMENT_OP; }
+[a-zA-Z]+       { return IDENTIFIER; }
+
 ";"             { return ';'; }
+"="             { return '='; }
+","             { return ','; }
 
 %%

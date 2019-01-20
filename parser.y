@@ -9,132 +9,163 @@
 extern int yylex(); extern int yyparse();
 void yyerror(const char *s);
 
-struct node *create_variable_node(const char *value);
-struct node *create_const_node(const int value);
-
-struct node *create_binaryop_node(enum op op, struct node *lhs, struct node *rhs);
 %}
 
 /* Bison Declarations */
 
-%union
-{
-    int ival;
-    char *sval;
-    struct node *nptr;
-}
+%token AUTO REGISTER STATIC EXTERN TYPEDEF
+%token VOID CHAR SHORT INT LONG FLOAT DOUBLE SIGNED UNSIGNED
+%token CONST VOLATILE
+%token IDENTIFIER
 
-%token <ival> integer_constant
-%token <sval> identifier
-
-%token POINTER_OP
-       INCREMENT_OP
-       DECREMENT_OP
-
-%type <nptr> unary_expression
-             postfix_expression
-             primary_expression
-             constant
+%start translation_unit
 
 %%
 
-/* Gammar Rules */
+/* Grammar Rules */
+
+translation_unit:
+    external_declaration |
+    translation_unit external_declaration
+    ;
+
+external_declaration:
+    declaration;
+
+declaration:
+    declaration_specifiers ';' |
+    declaration_specifiers init_declarator_list ';'
+    ;
+
+declaration_specifiers:
+    storage_class_specifier |
+    storage_class_specifier declaration_specifiers |
+    type_specifier |
+    type_specifier declaration_specifiers |
+    type_qualifier |
+    type_qualifier declaration_specifiers
+    ;
+
+storage_class_specifier:
+    AUTO | REGISTER | STATIC | EXTERN | TYPEDEF
+    ;
+
+type_specifier:
+    VOID | CHAR | SHORT | INT | LONG | FLOAT | DOUBLE | SIGNED | UNSIGNED
+    ;
+
+type_qualifier:
+    CONST | VOLATILE
+    ;
+
+init_declarator_list:
+    init_declarator |
+    init_declarator_list ',' init_declarator
+    ;
+
+init_declarator:
+    declarator |
+    declarator '=' initilizer
+    ;
+
+declarator:
+    direct_declarator |
+    pointer direct_declarator
+    ;
+
+direct_declarator:
+    IDENTIFIER
+    ;
+
+pointer:
+    '*' |
+    '*' type_qualifier_list |
+    '*' pointer |
+    '*' type_qualifier_list pointer
+    ;
+
+type_qualifier_list:
+    type_qualifier |
+    type_qualifier_list type_qualifier
+    ;
+
+initilizer:
+    assignment_expression
+    ;
+
+assignment_expression:
+    conditional_expression
+    ;
+
+conditional_expression:
+    logical_or_expression
+    ;
+
+logical_or_expression:
+    logical_and_expression
+    ;
+
+logical_and_expression:
+    inclusive_or_expression
+    ;
+
+inclusive_or_expression:
+    exclusive_or_expression
+    ;
+
+exclusive_or_expression:
+    and_expression
+    ;
+
+and_expression:
+    equality_expression
+    ;
+
+equality_expression:
+    relational_expression
+    ;
+
+relational_expression:
+    shift_expression
+    ;
+
+shift_expression:
+    additive_expression
+    ;
+
+additive_expression:
+    multiplicative_expression
+    ;
+
+multiplicative_expression:
+    cast_expression
+    ;
+
+cast_expression:
+    unary_expression
+    ;
 
 unary_expression:
     postfix_expression
-    | INCREMENT_OP unary_expression
-    {
-        printf("bison found ++unary_expression\n");
-    }
-    | DECREMENT_OP unary_expression
-    {
-        printf("bison found --unary_expression\n");
-    }
-    /* TODO unary_operator cast_expression */
-    /* TODO: 'sizeof' unary_expression */
-    /* TODO: 'sizeof' '(' type_name ')' */
     ;
 
 postfix_expression:
     primary_expression
-    {
-        printf("bison found primary_expression\n");
-    }
-    /* TODO: postfix_expression '[' expression ']' */
-    /* TODO: postfix_expression '(' argument_expression_list ')' */
-    | postfix_expression '.' identifier
-    {
-        printf("bison found postfix_expression.%s\n", $3);
-    }
-    | postfix_expression POINTER_OP identifier
-    {
-        printf("bison found postfix_expression->%s\n", $3);
-    }
-    | postfix_expression INCREMENT_OP
-    {
-        printf("bison found postfix_expression++\n");
-    }
-    | postfix_expression DECREMENT_OP
-    {
-        printf("bison found postfix_expression--\n");
-    };
-
-primary_expression:
-    identifier
-    {
-        $$ = create_variable_node($1);
-    }
-    | constant
-    /* TODO string */
-    /* TODO '(' expression ')' */
     ;
 
-constant:
-    integer_constant
-    {
-        $$ = create_const_node($1);
-    };
+primary_expression:
+    IDENTIFIER
+    ;
 
 %%
 
 /* Epilogue */
 
-struct node *
-create_binaryop_node(enum op op, struct node *lhs, struct node *rhs)
-{
-    printf("bison found expr: %d [%d] %d\n", lhs->constant.value, op, rhs->constant.value);
-    struct node *n = malloc(sizeof(struct node));
-    n->type = OPERATOR;
-    n->binaryop.lhs = lhs;
-    n->binaryop.rhs = rhs;
-
-    return n;
-}
-
-struct node *
-create_variable_node(const char *value)
-{
-    printf("bison found an identifier: %s\n", value);
-
-    struct node *n = malloc(sizeof(struct node));
-    /* TODO: construct variable node */
-    return n;
-}
-
-struct node *
-create_const_node(const int value)
-{
-    printf("bison found an int: %d\n", value);
-
-    struct node *n = malloc(sizeof(struct node));
-
-    n->type = VALUE;
-    n->constant.value = value;
-    return n;
-}
+#include <stdlib.h>
 
 void
 yyerror(const char *s)
 {
-  fprintf(stderr, "error: %s\n", s);
+    fprintf(stderr, "error: %s\n", s);
+    exit(1);
 }
