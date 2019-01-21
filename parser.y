@@ -17,6 +17,7 @@ void yyerror(const char *s);
 %token VOID CHAR SHORT INT LONG FLOAT DOUBLE SIGNED UNSIGNED
 %token CONST VOLATILE
 %token IDENTIFIER
+%token VA_OP
 
 %start translation_unit
 
@@ -30,11 +31,24 @@ translation_unit:
     ;
 
 external_declaration:
+    function_definition |
     declaration;
+
+function_definition:
+    declarator compound_statement |
+    declarator declaration_list compound_statement |
+    declaration_specifiers declarator compound_statement |
+    declaration_specifiers declarator declaration_list compound_statement |
+    ;
 
 declaration:
     declaration_specifiers ';' |
     declaration_specifiers init_declarator_list ';'
+    ;
+
+declaration_list:
+    declaration |
+    declaration_list declaration
     ;
 
 declaration_specifiers:
@@ -74,7 +88,9 @@ declarator:
     ;
 
 direct_declarator:
-    IDENTIFIER
+    IDENTIFIER |
+    direct_declarator'(' ')' |
+    direct_declarator'(' parameter_type_list ')'
     ;
 
 pointer:
@@ -89,8 +105,28 @@ type_qualifier_list:
     type_qualifier_list type_qualifier
     ;
 
+parameter_type_list:
+    parameter_list |
+    parameter_list ',' VA_OP
+    ;
+
+parameter_list:
+    parameter_declaration |
+    parameter_list ',' parameter_declaration
+    ;
+
+parameter_declaration:
+    declaration_specifiers declarator|
+    declaration_specifiers
+    ;
+
 initilizer:
     assignment_expression
+    ;
+
+compound_statement:
+    '{' '}' |
+    '{' declaration_list '}'
     ;
 
 assignment_expression:

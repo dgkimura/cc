@@ -29,8 +29,14 @@ extern int yylex();
 
 [a-zA-Z]+       { return IDENTIFIER; }
 
+"..."           { return VA_OP; }
 ";"             { return ';'; }
+"{"             { return '{'; }
+"}"             { return '}'; }
+"("             { return '('; }
+")"             { return ')'; }
 "="             { return '='; }
 ","             { return ','; }
+"*"             { return '*'; }
 
 %%
