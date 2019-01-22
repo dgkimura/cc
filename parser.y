@@ -18,6 +18,7 @@ void yyerror(const char *s);
 %token CONST VOLATILE
 %token IDENTIFIER
 %token VA_OP
+%token IF ELSE SWITCH
 
 %start translation_unit
 
@@ -79,7 +80,7 @@ init_declarator_list:
 
 init_declarator:
     declarator |
-    declarator '=' initilizer
+    declarator '=' initializer
     ;
 
 declarator:
@@ -120,13 +121,42 @@ parameter_declaration:
     declaration_specifiers
     ;
 
-initilizer:
+initializer:
     assignment_expression
+    ;
+
+statement:
+    expression_statement |
+    compound_statement |
+    selection_statement
+    ;
+
+expression_statement:
+    ';' |
+    expression '';
     ;
 
 compound_statement:
     '{' '}' |
-    '{' declaration_list '}'
+    '{' declaration_list '}' |
+    '{' declaration_list statement_list '}' |
+    '{' statement_list '}'
+    ;
+
+statement_list:
+    statement |
+    statement_list statement
+    ;
+
+selection_statement:
+    IF '(' expression ')' statement |
+    IF '(' expression ')' ELSE statement |
+    SWITCH '(' expression ')' statement
+    ;
+
+expression:
+    assignment_expression |
+    expression ',' assignment_expression
     ;
 
 assignment_expression:

@@ -14,20 +14,23 @@ extern int yylex();
 "char"          { return CHAR; }
 "const"         { return CONST; }
 "double"        { return DOUBLE; }
+"else"          { return ELSE; }
 "extern"        { return EXTERN; }
 "float"         { return FLOAT; }
+"if"            { return IF; }
 "int"           { return INT; }
 "long"          { return LONG; }
 "register"      { return REGISTER; }
 "short"         { return SHORT; }
 "signed"        { return SIGNED; }
 "static"        { return STATIC; }
+"switch"        { return SWITCH; }
 "typedef"       { return TYPEDEF; }
 "unsigned"      { return UNSIGNED; }
 "void"          { return VOID; }
 "volatile"      { return VOLATILE; }
 
-[a-zA-Z]+       { return IDENTIFIER; }
+[_a-zA-Z]+      { return IDENTIFIER; }
 
 "..."           { return VA_OP; }
 ";"             { return ';'; }
