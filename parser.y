@@ -19,6 +19,7 @@ void yyerror(const char *s);
 %token IDENTIFIER
 %token VA_OP
 %token IF ELSE SWITCH
+%token AND OR EQ NE LE GE LSHIFT RSHIFT
 
 %start translation_unit
 
@@ -168,43 +169,61 @@ conditional_expression:
     ;
 
 logical_or_expression:
-    logical_and_expression
+    logical_and_expression |
+    logical_or_expression OR logical_and_expression
     ;
 
 logical_and_expression:
-    inclusive_or_expression
+    inclusive_or_expression |
+    logical_and_expression AND inclusive_or_expression
     ;
 
 inclusive_or_expression:
-    exclusive_or_expression
+    exclusive_or_expression |
+    inclusive_or_expression '|' exclusive_or_expression
     ;
 
 exclusive_or_expression:
-    and_expression
+    and_expression |
+    exclusive_or_expression '^' and_expression
     ;
 
 and_expression:
-    equality_expression
+    equality_expression |
+    and_expression '&' equality_expression
     ;
 
 equality_expression:
-    relational_expression
+    relational_expression |
+    equality_expression EQ relational_expression |
+    equality_expression NE relational_expression
     ;
 
 relational_expression:
-    shift_expression
+    shift_expression |
+    relational_expression '<' shift_expression |
+    relational_expression '>' shift_expression |
+    relational_expression LE shift_expression |
+    relational_expression GE shift_expression
     ;
 
 shift_expression:
-    additive_expression
+    additive_expression |
+    shift_expression LSHIFT additive_expression |
+    shift_expression RSHIFT additive_expression
     ;
 
 additive_expression:
-    multiplicative_expression
+    multiplicative_expression |
+    additive_expression '+' multiplicative_expression |
+    additive_expression '-' multiplicative_expression
     ;
 
 multiplicative_expression:
-    cast_expression
+    cast_expression |
+    multiplicative_expression '*' cast_expression |
+    multiplicative_expression '/' cast_expression |
+    multiplicative_expression '%' cast_expression
     ;
 
 cast_expression:

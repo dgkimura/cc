@@ -33,6 +33,14 @@ extern int yylex();
 [_a-zA-Z]+      { return IDENTIFIER; }
 
 "..."           { return VA_OP; }
+"=="            { return EQ; }
+"!="            { return NE; }
+"<="            { return LE; }
+">="            { return GE; }
+"<<"            { return LSHIFT; }
+">>"            { return RSHIFT; }
+"+"             { return '+'; }
+"-"             { return '-'; }
 ";"             { return ';'; }
 "{"             { return '{'; }
 "}"             { return '}'; }
@@ -41,5 +49,8 @@ extern int yylex();
 "="             { return '='; }
 ","             { return ','; }
 "*"             { return '*'; }
+"|"             { return '|'; }
+"^"             { return '^'; }
+"&"             { return '&'; }
 
 %%
