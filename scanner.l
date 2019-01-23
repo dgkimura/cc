@@ -13,10 +13,12 @@ extern int yylex();
 "auto"          { return AUTO; }
 "char"          { return CHAR; }
 "const"         { return CONST; }
+"do"            { return DO; }
 "double"        { return DOUBLE; }
 "else"          { return ELSE; }
 "extern"        { return EXTERN; }
 "float"         { return FLOAT; }
+"for"           { return FOR; }
 "if"            { return IF; }
 "int"           { return INT; }
 "long"          { return LONG; }
@@ -29,6 +31,7 @@ extern int yylex();
 "unsigned"      { return UNSIGNED; }
 "void"          { return VOID; }
 "volatile"      { return VOLATILE; }
+"while"         { return WHILE; }
 
 [_a-zA-Z]+      { return IDENTIFIER; }
 
@@ -52,5 +55,7 @@ extern int yylex();
 "|"             { return '|'; }
 "^"             { return '^'; }
 "&"             { return '&'; }
+">"             { return '>'; }
+"<"             { return '<'; }
 
 %%

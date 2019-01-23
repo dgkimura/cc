@@ -18,7 +18,7 @@ void yyerror(const char *s);
 %token CONST VOLATILE
 %token IDENTIFIER
 %token VA_OP
-%token IF ELSE SWITCH
+%token IF ELSE SWITCH FOR DO WHILE
 %token AND OR EQ NE LE GE LSHIFT RSHIFT
 
 %start translation_unit
@@ -129,7 +129,8 @@ initializer:
 statement:
     expression_statement |
     compound_statement |
-    selection_statement
+    selection_statement |
+    iteration_statement
     ;
 
 expression_statement:
@@ -153,6 +154,18 @@ selection_statement:
     IF '(' expression ')' statement |
     IF '(' expression ')' ELSE statement |
     SWITCH '(' expression ')' statement
+    ;
+
+iteration_statement:
+    WHILE '(' expression ')' statement |
+    DO statement WHILE '(' expression')' ';' |
+    FOR '(' ';' ';' ')' statement |
+    FOR '(' expression ';' ';' ')' statement |
+    FOR '(' expression ';' expression ';' ')' statement |
+    FOR '(' expression ';' expression ';' expression ')' statement |
+    FOR '(' ';' expression ';' ')' statement |
+    FOR '(' ';' expression ';' expression ')' statement |
+    FOR '(' ';' ';' expression ')' statement
     ;
 
 expression:
