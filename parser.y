@@ -20,6 +20,7 @@ void yyerror(const char *s);
 %token VA_OP
 %token IF ELSE SWITCH FOR DO WHILE
 %token AND OR EQ NE LE GE LSHIFT RSHIFT
+%token MULT_ASSIGN DIV_ASSIGN MOD_ASSIGN ADD_ASSIGN MINUS_ASSIGN LSHIFT_ASSIGN RSIHFT_ASSIGN AND_ASSIGN XOR_ASSIGN OR_ASSIGN
 
 %start translation_unit
 
@@ -135,7 +136,7 @@ statement:
 
 expression_statement:
     ';' |
-    expression '';
+    expression ';'
     ;
 
 compound_statement:
@@ -174,7 +175,12 @@ expression:
     ;
 
 assignment_expression:
-    conditional_expression
+    conditional_expression |
+    unary_expression assignment_operator assignment_expression
+    ;
+
+assignment_operator:
+    '=' | MULT_ASSIGN | DIV_ASSIGN | MOD_ASSIGN | ADD_ASSIGN | MINUS_ASSIGN | LSHIFT_ASSIGN | RSIHFT_ASSIGN | AND_ASSIGN | XOR_ASSIGN | OR_ASSIGN
     ;
 
 conditional_expression:

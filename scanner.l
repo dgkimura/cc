@@ -42,6 +42,16 @@ extern int yylex();
 ">="            { return GE; }
 "<<"            { return LSHIFT; }
 ">>"            { return RSHIFT; }
+"*="            { return MULT_ASSIGN; }
+"/="            { return DIV_ASSIGN; }
+"%="            { return MOD_ASSIGN; }
+"+="            { return ADD_ASSIGN; }
+"-="            { return MINUS_ASSIGN; }
+"<<="           { return LSHIFT_ASSIGN; }
+">>="           { return RSIHFT_ASSIGN; }
+"&="            { return AND_ASSIGN; }
+"^="            { return XOR_ASSIGN; }
+"|="            { return OR_ASSIGN; }
 "+"             { return '+'; }
 "-"             { return '-'; }
 ";"             { return ';'; }
