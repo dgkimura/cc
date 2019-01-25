@@ -52,6 +52,8 @@ extern int yylex();
 "&="            { return AND_ASSIGN; }
 "^="            { return XOR_ASSIGN; }
 "|="            { return OR_ASSIGN; }
+"++"            { return INCREMENT; }
+"--"            { return DECREMENT; }
 "+"             { return '+'; }
 "-"             { return '-'; }
 ";"             { return ';'; }
@@ -67,5 +69,7 @@ extern int yylex();
 "&"             { return '&'; }
 ">"             { return '>'; }
 "<"             { return '<'; }
+"!"             { return '!'; }
+"~"             { return '~'; }
 
 %%

@@ -21,6 +21,7 @@ void yyerror(const char *s);
 %token IF ELSE SWITCH FOR DO WHILE
 %token AND OR EQ NE LE GE LSHIFT RSHIFT
 %token MULT_ASSIGN DIV_ASSIGN MOD_ASSIGN ADD_ASSIGN MINUS_ASSIGN LSHIFT_ASSIGN RSIHFT_ASSIGN AND_ASSIGN XOR_ASSIGN OR_ASSIGN
+%token INCREMENT DECREMENT
 
 %start translation_unit
 
@@ -250,11 +251,19 @@ cast_expression:
     ;
 
 unary_expression:
-    postfix_expression
+    postfix_expression |
+    INCREMENT unary_expression |
+    DECREMENT unary_expression |
+    unary_operator cast_expression
     ;
 
+unary_operator:
+    '&' | '*' | '+' | '-' | '~' | '!'
+
 postfix_expression:
-    primary_expression
+    primary_expression |
+    postfix_expression INCREMENT |
+    postfix_expression DECREMENT
     ;
 
 primary_expression:
