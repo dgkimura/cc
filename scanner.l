@@ -34,6 +34,8 @@ extern int yylex();
 "while"         { return WHILE; }
 
 [_a-zA-Z]+      { return IDENTIFIER; }
+[1-9]+[0-9]*    { return INTEGER; }
+'.'             { return CHARACTER_CONSTANT; }
 
 "..."           { return VA_OP; }
 "=="            { return EQ; }

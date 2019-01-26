@@ -16,7 +16,7 @@ void yyerror(const char *s);
 %token AUTO REGISTER STATIC EXTERN TYPEDEF
 %token VOID CHAR SHORT INT LONG FLOAT DOUBLE SIGNED UNSIGNED
 %token CONST VOLATILE
-%token IDENTIFIER
+%token IDENTIFIER INTEGER CHARACTER_CONSTANT
 %token VA_OP
 %token IF ELSE SWITCH FOR DO WHILE
 %token AND OR EQ NE LE GE LSHIFT RSHIFT
@@ -267,8 +267,13 @@ postfix_expression:
     ;
 
 primary_expression:
-    IDENTIFIER
+    IDENTIFIER |
+    constant
     ;
+
+constant:
+    INTEGER |
+    CHARACTER_CONSTANT
 
 %%
 
