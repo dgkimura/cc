@@ -185,7 +185,8 @@ assignment_operator:
     ;
 
 conditional_expression:
-    logical_or_expression
+    logical_or_expression |
+    logical_or_expression '?' expression ':' conditional_expression
     ;
 
 logical_or_expression:

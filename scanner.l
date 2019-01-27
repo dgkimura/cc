@@ -73,5 +73,7 @@ extern int yylex();
 "<"             { return '<'; }
 "!"             { return '!'; }
 "~"             { return '~'; }
+"?"             { return '?'; }
+":"             { return ':'; }
 
 %%
