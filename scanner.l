@@ -11,18 +11,22 @@ extern int yylex();
 
 [ \t\n]         ;
 "auto"          { return AUTO; }
+"break"         { return BREAK; }
 "char"          { return CHAR; }
 "const"         { return CONST; }
+"continue"      { return CONTINUE; }
 "do"            { return DO; }
 "double"        { return DOUBLE; }
 "else"          { return ELSE; }
 "extern"        { return EXTERN; }
 "float"         { return FLOAT; }
 "for"           { return FOR; }
+"goto"          { return GOTO; }
 "if"            { return IF; }
 "int"           { return INT; }
 "long"          { return LONG; }
 "register"      { return REGISTER; }
+"return"        { return RETURN; }
 "short"         { return SHORT; }
 "signed"        { return SIGNED; }
 "static"        { return STATIC; }

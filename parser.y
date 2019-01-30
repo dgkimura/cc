@@ -18,7 +18,7 @@ void yyerror(const char *s);
 %token CONST VOLATILE
 %token IDENTIFIER INTEGER CHARACTER_CONSTANT
 %token VA_OP
-%token IF ELSE SWITCH FOR DO WHILE
+%token IF ELSE SWITCH FOR DO WHILE GOTO CONTINUE BREAK RETURN
 %token AND OR EQ NE LE GE LSHIFT RSHIFT
 %token MULT_ASSIGN DIV_ASSIGN MOD_ASSIGN ADD_ASSIGN MINUS_ASSIGN LSHIFT_ASSIGN RSIHFT_ASSIGN AND_ASSIGN XOR_ASSIGN OR_ASSIGN
 %token INCREMENT DECREMENT
@@ -132,7 +132,8 @@ statement:
     expression_statement |
     compound_statement |
     selection_statement |
-    iteration_statement
+    iteration_statement |
+    jump_statement
     ;
 
 expression_statement:
@@ -168,6 +169,14 @@ iteration_statement:
     FOR '(' ';' expression ';' ')' statement |
     FOR '(' ';' expression ';' expression ')' statement |
     FOR '(' ';' ';' expression ')' statement
+    ;
+
+jump_statement:
+    GOTO IDENTIFIER |
+    CONTINUE ';' |
+    BREAK ';' |
+    RETURN ';' |
+    RETURN expression ';'
     ;
 
 expression:
