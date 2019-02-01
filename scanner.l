@@ -12,9 +12,11 @@ extern int yylex();
 [ \t\n]         ;
 "auto"          { return AUTO; }
 "break"         { return BREAK; }
+"case"          { return CASE; }
 "char"          { return CHAR; }
 "const"         { return CONST; }
 "continue"      { return CONTINUE; }
+"default"       { return DEFAULT; }
 "do"            { return DO; }
 "double"        { return DOUBLE; }
 "else"          { return ELSE; }
