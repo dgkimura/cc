@@ -22,6 +22,7 @@ void yyerror(const char *s);
 %token AND OR EQ NE LE GE LSHIFT RSHIFT
 %token MULT_ASSIGN DIV_ASSIGN MOD_ASSIGN ADD_ASSIGN MINUS_ASSIGN LSHIFT_ASSIGN RSIHFT_ASSIGN AND_ASSIGN XOR_ASSIGN OR_ASSIGN
 %token INCREMENT DECREMENT
+%token STRUCT UNION
 
 %start translation_unit
 
@@ -69,11 +70,26 @@ storage_class_specifier:
     ;
 
 type_specifier:
-    VOID | CHAR | SHORT | INT | LONG | FLOAT | DOUBLE | SIGNED | UNSIGNED
+    VOID | CHAR | SHORT | INT | LONG | FLOAT | DOUBLE | SIGNED | UNSIGNED | struct_or_union_specifier
     ;
 
 type_qualifier:
     CONST | VOLATILE
+    ;
+
+struct_or_union_specifier:
+    struct_or_union IDENTIFIER '{' struct_declaration_list '}' |
+    struct_or_union '{' struct_declaration_list '}' |
+    struct_or_union IDENTIFIER
+    ;
+
+struct_or_union:
+    STRUCT | UNION
+    ;
+
+struct_declaration_list:
+    struct_declaration |
+    struct_declaration_list struct_declaration
     ;
 
 init_declarator_list:
@@ -84,6 +100,28 @@ init_declarator_list:
 init_declarator:
     declarator |
     declarator '=' initializer
+    ;
+
+struct_declaration:
+    specifier_qualifier_list struct_declarator_list ';'
+    ;
+
+specifier_qualifier_list:
+    type_qualifier specifier_qualifier_list |
+    type_qualifier |
+    type_specifier specifier_qualifier_list |
+    type_specifier |
+    ;
+
+struct_declarator_list:
+    struct_declarator |
+    struct_declarator_list ',' struct_declarator
+    ;
+
+struct_declarator:
+    declarator |
+    declarator ':' constant_expression |
+    ':' constant_expression
     ;
 
 declarator:

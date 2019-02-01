@@ -32,8 +32,10 @@ extern int yylex();
 "short"         { return SHORT; }
 "signed"        { return SIGNED; }
 "static"        { return STATIC; }
+"struct"        { return STRUCT; }
 "switch"        { return SWITCH; }
 "typedef"       { return TYPEDEF; }
+"union"         { return UNION; }
 "unsigned"      { return UNSIGNED; }
 "void"          { return VOID; }
 "volatile"      { return VOLATILE; }
