@@ -22,7 +22,7 @@ void yyerror(const char *s);
 %token AND OR EQ NE LE GE LSHIFT RSHIFT
 %token MULT_ASSIGN DIV_ASSIGN MOD_ASSIGN ADD_ASSIGN MINUS_ASSIGN LSHIFT_ASSIGN RSIHFT_ASSIGN AND_ASSIGN XOR_ASSIGN OR_ASSIGN
 %token INCREMENT DECREMENT
-%token STRUCT UNION
+%token STRUCT UNION ENUM
 
 %start translation_unit
 
@@ -70,7 +70,7 @@ storage_class_specifier:
     ;
 
 type_specifier:
-    VOID | CHAR | SHORT | INT | LONG | FLOAT | DOUBLE | SIGNED | UNSIGNED | struct_or_union_specifier
+    VOID | CHAR | SHORT | INT | LONG | FLOAT | DOUBLE | SIGNED | UNSIGNED | struct_or_union_specifier | enum_specifier
     ;
 
 type_qualifier:
@@ -122,6 +122,21 @@ struct_declarator:
     declarator |
     declarator ':' constant_expression |
     ':' constant_expression
+    ;
+
+enum_specifier:
+    ENUM IDENTIFIER '{' enumerator_list '}' |
+    ENUM IDENTIFIER
+    ;
+
+enumerator_list:
+    enumerator |
+    enumerator_list ',' enumerator
+    ;
+
+enumerator:
+    IDENTIFIER |
+    IDENTIFIER '=' constant_expression
     ;
 
 declarator:

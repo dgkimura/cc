@@ -12,6 +12,7 @@ extern int yylex();
 [ \t\n]         ;
 "auto"          { return AUTO; }
 "break"         { return BREAK; }
+"enum"          { return ENUM; }
 "case"          { return CASE; }
 "char"          { return CHAR; }
 "const"         { return CONST; }
