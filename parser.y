@@ -20,7 +20,7 @@ void yyerror(const char *s);
 %token VA_OP
 %token IF ELSE SWITCH FOR DO WHILE GOTO CONTINUE BREAK RETURN CASE DEFAULT
 %token AND OR EQ NE LE GE LSHIFT RSHIFT
-%token MULT_ASSIGN DIV_ASSIGN MOD_ASSIGN ADD_ASSIGN MINUS_ASSIGN LSHIFT_ASSIGN RSIHFT_ASSIGN AND_ASSIGN XOR_ASSIGN OR_ASSIGN
+%token MULT_ASSIGN DIV_ASSIGN MOD_ASSIGN ADD_ASSIGN MINUS_ASSIGN LSHIFT_ASSIGN RSIHFT_ASSIGN AND_ASSIGN XOR_ASSIGN OR_ASSIGN POINTER
 %token INCREMENT DECREMENT
 %token STRUCT UNION ENUM
 
@@ -336,6 +336,9 @@ unary_operator:
 
 postfix_expression:
     primary_expression |
+    postfix_expression '[' expression ']' |
+    postfix_expression '.' IDENTIFIER |
+    postfix_expression POINTER IDENTIFIER |
     postfix_expression INCREMENT |
     postfix_expression DECREMENT
     ;
