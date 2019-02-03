@@ -146,8 +146,9 @@ declarator:
 
 direct_declarator:
     IDENTIFIER |
-    direct_declarator'(' ')' |
-    direct_declarator'(' parameter_type_list ')'
+    direct_declarator '[' constant_expression ']' |
+    direct_declarator '(' ')' |
+    direct_declarator '(' parameter_type_list ')'
     ;
 
 pointer:
