@@ -216,7 +216,7 @@ statement_list:
 
 selection_statement:
     IF '(' expression ')' statement |
-    IF '(' expression ')' ELSE statement |
+    IF '(' expression ')' statement ELSE statement |
     SWITCH '(' expression ')' statement
     ;
 
