@@ -26,6 +26,13 @@ void yyerror(const char *s);
 
 %start translation_unit
 
+%union
+{
+    struct astnode *node;
+}
+
+%type <node> constant
+
 %%
 
 /* Grammar Rules */
@@ -350,8 +357,8 @@ primary_expression:
     ;
 
 constant:
-    INTEGER |
-    CHARACTER_CONSTANT
+    INTEGER { $$ = create_node(); } |
+    CHARACTER_CONSTANT { $$ = create_node(); }
 
 %%
 
