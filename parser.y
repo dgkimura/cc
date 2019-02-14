@@ -28,10 +28,14 @@ void yyerror(const char *s);
 
 %union
 {
+    int integer;
+    char character;
     struct astnode *node;
 }
 
 %type <node> constant
+%type <integer> INTEGER
+%type <character> CHARACTER_CONSTANT
 
 %%
 
@@ -357,8 +361,8 @@ primary_expression:
     ;
 
 constant:
-    INTEGER { $$ = create_node(); } |
-    CHARACTER_CONSTANT { $$ = create_node(); }
+    INTEGER { $$ = create_integer_node($1); } |
+    CHARACTER_CONSTANT { $$ = create_integer_node($1); }
 
 %%
 

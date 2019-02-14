@@ -1,6 +1,16 @@
 enum astnode_type
 {
+    OP_NODETYPE,
+    IDENTIFIER_NODETYPE,
     CONSTANT_NODETYPE
+};
+
+enum operand
+{
+    ADD,
+    SUB,
+    MULT,
+    MOD
 };
 
 struct astnode
@@ -12,6 +22,17 @@ struct astnode
      */
     union
     {
+        /* OP_EXP */
+        struct
+        {
+            struct astnode *left;
+            struct astnode *right;
+            enum operand operand;
+        };
+        struct
+        {
+            char *identifier;
+        };
         /* constant */
         struct
         {
@@ -25,4 +46,4 @@ struct astnode
     };
 };
 
-struct astnode *create_node();
+struct astnode *create_integer_node(int integer);
