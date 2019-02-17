@@ -51,5 +51,6 @@ struct astnode
     };
 };
 
+struct astnode *create_identifier_node(char *identifier);
 struct astnode *create_integer_node(int integer);
 struct astnode *create_character_node(char character);

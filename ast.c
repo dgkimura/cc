@@ -3,6 +3,16 @@
 #include "ast.h"
 
 struct astnode *
+create_identifier_node(char *identifier)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_CHARACTER_TYPE;
+    node->identifier = identifier;
+    return node;
+}
+
+struct astnode *
 create_integer_node(int integer)
 {
     struct astnode *node;

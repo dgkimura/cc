@@ -30,11 +30,13 @@ void yyerror(const char *s);
 {
     int integer;
     char character;
+    char *string;
     struct astnode *node;
 }
 
-%type <node> constant
+%type <node> primary_expression constant
 %type <integer> INTEGER
+%type <string> IDENTIFIER
 %type <character> CHARACTER_CONSTANT
 
 %%
@@ -356,7 +358,7 @@ postfix_expression:
     ;
 
 primary_expression:
-    IDENTIFIER |
+    IDENTIFIER { $$ = create_identifier_node($1); } |
     constant
     ;
 
