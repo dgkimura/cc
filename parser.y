@@ -362,7 +362,8 @@ primary_expression:
 
 constant:
     INTEGER { $$ = create_integer_node($1); } |
-    CHARACTER_CONSTANT { $$ = create_integer_node($1); }
+    CHARACTER_CONSTANT { $$ = create_character_node($1); }
+    ;
 
 %%
 

@@ -1,8 +1,13 @@
+/*
+ * An astnode represents one of the following concepts in C: data type,
+ * variable, expression, or statement.
+ */
+
 enum astnode_type
 {
-    OP_NODETYPE,
-    IDENTIFIER_NODETYPE,
-    CONSTANT_NODETYPE
+    AST_IDENTIFIER_TYPE,
+    AST_INTEGER_TYPE,
+    AST_CHARACTER_TYPE
 };
 
 enum operand
@@ -47,3 +52,4 @@ struct astnode
 };
 
 struct astnode *create_integer_node(int integer);
+struct astnode *create_character_node(char character);
