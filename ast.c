@@ -3,6 +3,26 @@
 #include "ast.h"
 
 struct astnode *
+create_postincrement_node(struct astnode *expression)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_POSTINCREMENT_EXPRESSION;
+    node->expression = expression;
+    return node;
+}
+
+struct astnode *
+create_postdecrement_node(struct astnode *expression)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_POSTDECREMENT_EXPRESSION;
+    node->expression = expression;
+    return node;
+}
+
+struct astnode *
 create_identifier_node(char *identifier)
 {
     struct astnode *node;
