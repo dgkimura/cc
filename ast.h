@@ -5,6 +5,8 @@
 
 enum astnode_type
 {
+    AST_PREINCREMENT_EXPRESSION,
+    AST_PREDECREMENT_EXPRESSION,
     AST_POSTINCREMENT_EXPRESSION,
     AST_POSTDECREMENT_EXPRESSION,
     AST_IDENTIFIER_TYPE,
@@ -58,6 +60,8 @@ struct astnode
     };
 };
 
+struct astnode *create_preincrement_node(struct astnode *expression);
+struct astnode *create_predecrement_node(struct astnode *expression);
 struct astnode *create_postincrement_node(struct astnode *expression);
 struct astnode *create_postdecrement_node(struct astnode *expression);
 struct astnode *create_identifier_node(char *identifier);
