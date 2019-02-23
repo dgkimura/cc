@@ -5,6 +5,7 @@
 
 enum astnode_type
 {
+    AST_COMPONENT_REFERENCE,
     AST_PREINCREMENT_EXPRESSION,
     AST_PREDECREMENT_EXPRESSION,
     AST_POSTINCREMENT_EXPRESSION,
@@ -38,13 +39,10 @@ struct astnode
             struct astnode *right;
             enum operand operand;
         };
-        /* post increment/decrement */
         struct
         {
+            struct astnode *postfix_expression;
             struct astnode *expression;
-        };
-        struct
-        {
             char *identifier;
         };
         /* constant */
@@ -60,10 +58,27 @@ struct astnode
     };
 };
 
-struct astnode *create_preincrement_node(struct astnode *expression);
-struct astnode *create_predecrement_node(struct astnode *expression);
-struct astnode *create_postincrement_node(struct astnode *expression);
-struct astnode *create_postdecrement_node(struct astnode *expression);
-struct astnode *create_identifier_node(char *identifier);
-struct astnode *create_integer_node(int integer);
-struct astnode *create_character_node(char character);
+struct astnode *create_component_reference_node(
+    struct astnode *postfix_expression,
+    char *identifier);
+
+struct astnode *create_preincrement_node(
+    struct astnode *expression);
+
+struct astnode *create_predecrement_node(
+    struct astnode *expression);
+
+struct astnode *create_postincrement_node(
+    struct astnode *expression);
+
+struct astnode *create_postdecrement_node(
+    struct astnode *expression);
+
+struct astnode *create_identifier_node(
+    char *identifier);
+
+struct astnode *create_integer_node(
+    int integer);
+
+struct astnode *create_character_node(
+    char character);

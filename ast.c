@@ -3,6 +3,19 @@
 #include "ast.h"
 
 struct astnode *
+create_component_reference_node(
+    struct astnode *postfix_expression,
+    char *identifier)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_COMPONENT_REFERENCE;
+    node->postfix_expression = postfix_expression;
+    node->identifier = identifier;
+    return node;
+}
+
+struct astnode *
 create_preincrement_node(struct astnode *expression)
 {
     struct astnode *node;
