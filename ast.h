@@ -5,6 +5,7 @@
 
 enum astnode_type
 {
+    AST_UNARY_CAST_EXPRESSION,
     AST_COMPONENT_REFERENCE,
     AST_ARRAY_REFERENCE,
     AST_PREINCREMENT_EXPRESSION,
@@ -20,6 +21,16 @@ enum reference_type
 {
     VALUE,
     REFERENCE
+};
+
+enum unary_operand
+{
+    ADDRESS,
+    DEREFERENCE,
+    POSITIVE,
+    NEGATIVE,
+    BITWISE_NOT,
+    NOT
 };
 
 enum operand
@@ -46,6 +57,13 @@ struct astnode
             struct astnode *right;
             enum operand operand;
         };
+        /* unary expression */
+        struct
+        {
+            struct astnode *cast_expression;
+            enum unary_operand unaryop;
+        };
+        /* postfix expression */
         struct
         {
             struct astnode *postfix_expression;
@@ -65,6 +83,10 @@ struct astnode
         };
     };
 };
+
+struct astnode *create_unary_expression_node(
+    struct astnode *cast_expression,
+    enum unary_operand unaryop);
 
 struct astnode *create_array_reference_node(
     struct astnode *postfix_expression,

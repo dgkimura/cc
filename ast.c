@@ -2,6 +2,18 @@
 
 #include "ast.h"
 
+struct astnode *create_unary_expression_node(
+    struct astnode *cast_expression,
+    enum unary_operand unaryop)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_UNARY_CAST_EXPRESSION;
+    node->cast_expression = cast_expression;
+    node->unaryop = unaryop;
+    return node;
+}
+
 struct astnode *
 create_array_reference_node(
     struct astnode *postfix_expression,
