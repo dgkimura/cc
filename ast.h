@@ -6,6 +6,7 @@
 enum astnode_type
 {
     AST_COMPONENT_REFERENCE,
+    AST_ARRAY_REFERENCE,
     AST_PREINCREMENT_EXPRESSION,
     AST_PREDECREMENT_EXPRESSION,
     AST_POSTINCREMENT_EXPRESSION,
@@ -13,6 +14,12 @@ enum astnode_type
     AST_IDENTIFIER_TYPE,
     AST_INTEGER_TYPE,
     AST_CHARACTER_TYPE
+};
+
+enum reference_type
+{
+    VALUE,
+    REFERENCE
 };
 
 enum operand
@@ -44,6 +51,7 @@ struct astnode
             struct astnode *postfix_expression;
             struct astnode *expression;
             char *identifier;
+            enum reference_type reftype;
         };
         /* constant */
         struct
@@ -58,9 +66,19 @@ struct astnode
     };
 };
 
+struct astnode *create_array_reference_node(
+    struct astnode *postfix_expression,
+    struct astnode *expression);
+
 struct astnode *create_component_reference_node(
     struct astnode *postfix_expression,
-    char *identifier);
+    char *identifier,
+    enum reference_type reftype);
+
+struct astnode *create_component_reference_node(
+    struct astnode *postfix_expression,
+    char *identifier,
+    enum reference_type reftype);
 
 struct astnode *create_preincrement_node(
     struct astnode *expression);
