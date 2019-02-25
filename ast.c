@@ -2,6 +2,22 @@
 
 #include "ast.h"
 
+struct astnode *
+create_binary_expression_node(
+    struct astnode *left_expression,
+    struct astnode *right_expression,
+    enum binary_operand binaryop,
+    enum astnode_type nodetype)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = nodetype;
+    node->left_expression = left_expression;
+    node->right_expression = right_expression;
+    node->binaryop = binaryop;
+    return node;
+}
+
 struct astnode *create_unary_expression_node(
     struct astnode *cast_expression,
     enum unary_operand unaryop)
