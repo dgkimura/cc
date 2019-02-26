@@ -5,6 +5,7 @@
 
 enum astnode_type
 {
+    AST_CONDITIONAL_EXPRESSION,
     AST_MULTIPLICATIVE_EXPRESSION,
     AST_UNARY_CAST_EXPRESSION,
     AST_COMPONENT_REFERENCE,
@@ -65,6 +66,13 @@ struct astnode
      */
     union
     {
+        /* conditional expression */
+        struct
+        {
+            struct astnode *condition;
+            struct astnode *then_value;
+            struct astnode *else_value;
+        };
         /* binary expression */
         struct
         {
@@ -98,6 +106,11 @@ struct astnode
         };
     };
 };
+
+struct astnode *create_conditional_expression_node(
+    struct astnode *condition,
+    struct astnode *then_value,
+    struct astnode *else_value);
 
 struct astnode *create_binary_expression_node(
     struct astnode *left_expression,

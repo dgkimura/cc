@@ -3,6 +3,21 @@
 #include "ast.h"
 
 struct astnode *
+create_conditional_expression_node(
+    struct astnode *condition,
+    struct astnode *then_value,
+    struct astnode *else_value)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_CONDITIONAL_EXPRESSION;
+    node->condition = condition;
+    node->then_value = then_value;
+    node->else_value = else_value;
+    return node;
+}
+
+struct astnode *
 create_binary_expression_node(
     struct astnode *left_expression,
     struct astnode *right_expression,
