@@ -3,6 +3,19 @@
 #include "ast.h"
 
 struct astnode *
+create_modify_expression_node(
+    struct astnode *modify_identifier,
+    struct astnode *assignment_expression)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_MODIFY_EXPRESSION;
+    node->modify_identifier = modify_identifier;
+    node->assignment_expression = assignment_expression;
+    return node;
+}
+
+struct astnode *
 create_conditional_expression_node(
     struct astnode *condition,
     struct astnode *then_value,

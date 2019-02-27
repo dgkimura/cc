@@ -5,6 +5,7 @@
 
 enum astnode_type
 {
+    AST_MODIFY_EXPRESSION,
     AST_CONDITIONAL_EXPRESSION,
     AST_MULTIPLICATIVE_EXPRESSION,
     AST_UNARY_CAST_EXPRESSION,
@@ -66,6 +67,12 @@ struct astnode
      */
     union
     {
+        /* modify expression */
+        struct
+        {
+            struct astnode *modify_identifier;
+            struct astnode *assignment_expression;
+        };
         /* conditional expression */
         struct
         {
@@ -106,6 +113,10 @@ struct astnode
         };
     };
 };
+
+struct astnode *create_modify_expression_node(
+    struct astnode *modify_identifier,
+    struct astnode *assignment_expression);
 
 struct astnode *create_conditional_expression_node(
     struct astnode *condition,
