@@ -8,7 +8,8 @@ enum astnode_type
     AST_MODIFY_EXPRESSION,
     AST_CONDITIONAL_EXPRESSION,
     AST_MULTIPLICATIVE_EXPRESSION,
-    AST_UNARY_CAST_EXPRESSION,
+    AST_BINARY_EXPRESSION,
+    AST_UNARY_EXPRESSION,
     AST_COMPONENT_REFERENCE,
     AST_ARRAY_REFERENCE,
     AST_PREINCREMENT_EXPRESSION,
@@ -126,21 +127,14 @@ struct astnode *create_conditional_expression_node(
 struct astnode *create_binary_expression_node(
     struct astnode *left_expression,
     struct astnode *right_expression,
-    enum binary_operand binaryop,
-    enum astnode_type nodetype);
+    enum binary_operand binaryop);
 
 struct astnode *create_unary_expression_node(
-    struct astnode *cast_expression,
-    enum unary_operand unaryop);
+    struct astnode *cast_expression);
 
 struct astnode *create_array_reference_node(
     struct astnode *postfix_expression,
     struct astnode *expression);
-
-struct astnode *create_component_reference_node(
-    struct astnode *postfix_expression,
-    char *identifier,
-    enum reference_type reftype);
 
 struct astnode *create_component_reference_node(
     struct astnode *postfix_expression,

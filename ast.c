@@ -34,27 +34,26 @@ struct astnode *
 create_binary_expression_node(
     struct astnode *left_expression,
     struct astnode *right_expression,
-    enum binary_operand binaryop,
-    enum astnode_type nodetype)
+    enum binary_operand binaryop)
 {
     struct astnode *node;
     node = (struct astnode *)malloc(sizeof(struct astnode));
-    node->type = nodetype;
+    node->type = AST_BINARY_EXPRESSION;
     node->left_expression = left_expression;
     node->right_expression = right_expression;
     node->binaryop = binaryop;
     return node;
 }
 
-struct astnode *create_unary_expression_node(
-    struct astnode *cast_expression,
-    enum unary_operand unaryop)
+struct astnode *
+create_unary_expression_node(
+    struct astnode *cast_expression)
 {
     struct astnode *node;
     node = (struct astnode *)malloc(sizeof(struct astnode));
-    node->type = AST_UNARY_CAST_EXPRESSION;
+    node->type = AST_UNARY_EXPRESSION;
     node->cast_expression = cast_expression;
-    node->unaryop = unaryop;
+    //node->unaryop = unaryop;
     return node;
 }
 

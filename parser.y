@@ -34,7 +34,7 @@ void yyerror(const char *s);
     struct astnode *node;
 }
 
-%type <node> primary_expression constant
+%type <node> expression assignment_expression conditional_expression logical_or_expression logical_and_expression inclusive_or_expression exclusive_or_expression and_expression equality_expression relational_expression shift_expression additive_expression multiplicative_expression cast_expression unary_expression postfix_expression primary_expression constant
 %type <integer> INTEGER
 %type <string> IDENTIFIER
 %type <character> CHARACTER_CONSTANT
@@ -260,7 +260,7 @@ expression:
 
 assignment_expression:
     conditional_expression |
-    unary_expression assignment_operator assignment_expression
+    unary_expression assignment_operator assignment_expression { $$ = create_modify_expression_node($1, $3); /*FIXME: pass assignment_operator*/ }
     ;
 
 assignment_operator:
@@ -269,7 +269,7 @@ assignment_operator:
 
 conditional_expression:
     logical_or_expression |
-    logical_or_expression '?' expression ':' conditional_expression
+    logical_or_expression '?' expression ':' conditional_expression { $$ =  create_conditional_expression_node($1, $3, $5);}
     ;
 
 constant_expression:
@@ -278,60 +278,60 @@ constant_expression:
 
 logical_or_expression:
     logical_and_expression |
-    logical_or_expression OR logical_and_expression
+    logical_or_expression OR logical_and_expression { $$ =  create_binary_expression_node($1, $3, AST_LOGICAL_OR);}
     ;
 
 logical_and_expression:
     inclusive_or_expression |
-    logical_and_expression AND inclusive_or_expression
+    logical_and_expression AND inclusive_or_expression { $$ =  create_binary_expression_node($1, $3, AST_LOGICAL_AND);}
     ;
 
 inclusive_or_expression:
     exclusive_or_expression |
-    inclusive_or_expression '|' exclusive_or_expression
+    inclusive_or_expression '|' exclusive_or_expression { $$ =  create_binary_expression_node($1, $3, AST_BITWISE_OR);}
     ;
 
 exclusive_or_expression:
     and_expression |
-    exclusive_or_expression '^' and_expression
+    exclusive_or_expression '^' and_expression { $$ =  create_binary_expression_node($1, $3, AST_XOR);}
     ;
 
 and_expression:
     equality_expression |
-    and_expression '&' equality_expression
+    and_expression '&' equality_expression { $$ =  create_binary_expression_node($1, $3, AST_BITWISE_AND);}
     ;
 
 equality_expression:
     relational_expression |
-    equality_expression EQ relational_expression |
-    equality_expression NE relational_expression
+    equality_expression EQ relational_expression { $$ =  create_binary_expression_node($1, $3, AST_EQUAL);} |
+    equality_expression NE relational_expression { $$ =  create_binary_expression_node($1, $3, AST_NOT_EQUAL);}
     ;
 
 relational_expression:
     shift_expression |
-    relational_expression '<' shift_expression |
-    relational_expression '>' shift_expression |
-    relational_expression LE shift_expression |
-    relational_expression GE shift_expression
+    relational_expression '<' shift_expression { $$ =  create_binary_expression_node($1, $3, AST_LESS_THAN);} |
+    relational_expression '>' shift_expression { $$ =  create_binary_expression_node($1, $3, AST_GREATER_THAN);} |
+    relational_expression LE shift_expression { $$ =  create_binary_expression_node($1, $3, AST_LESS_THAN_OR_EQUAL);} |
+    relational_expression GE shift_expression { $$ =  create_binary_expression_node($1, $3, AST_GREATER_THAN_OR_EQUAL);}
     ;
 
 shift_expression:
     additive_expression |
-    shift_expression LSHIFT additive_expression |
-    shift_expression RSHIFT additive_expression
+    shift_expression LSHIFT additive_expression { $$ =  create_binary_expression_node($1, $3, AST_SHIFT_LEFT);} |
+    shift_expression RSHIFT additive_expression { $$ =  create_binary_expression_node($1, $3, AST_SHIFT_RIGHT);}
     ;
 
 additive_expression:
     multiplicative_expression |
-    additive_expression '+' multiplicative_expression |
-    additive_expression '-' multiplicative_expression
+    additive_expression '+' multiplicative_expression { $$ =  create_binary_expression_node($1, $3, AST_ADDITION);} |
+    additive_expression '-' multiplicative_expression { $$ =  create_binary_expression_node($1, $3, AST_SUBTRACTION);}
     ;
 
 multiplicative_expression:
     cast_expression |
-    multiplicative_expression '*' cast_expression |
-    multiplicative_expression '/' cast_expression |
-    multiplicative_expression '%' cast_expression
+    multiplicative_expression '*' cast_expression { $$ =  create_binary_expression_node($1, $3, AST_MULTIPLICATION);} |
+    multiplicative_expression '/' cast_expression { $$ =  create_binary_expression_node($1, $3, AST_DIVISION);} |
+    multiplicative_expression '%' cast_expression { $$ = create_binary_expression_node($1, $3, AST_MODULUS); }
     ;
 
 cast_expression:
@@ -340,9 +340,9 @@ cast_expression:
 
 unary_expression:
     postfix_expression |
-    INCREMENT unary_expression |
-    DECREMENT unary_expression |
-    unary_operator cast_expression
+    INCREMENT unary_expression { $$ = create_preincrement_node($2); } |
+    DECREMENT unary_expression { $$ = create_predecrement_node($2); } |
+    unary_operator cast_expression { $$ = create_unary_expression_node($2); /*FIXME: pass unary_operator*/ }
     ;
 
 unary_operator:
@@ -350,11 +350,11 @@ unary_operator:
 
 postfix_expression:
     primary_expression |
-    postfix_expression '[' expression ']' |
-    postfix_expression '.' IDENTIFIER |
-    postfix_expression POINTER IDENTIFIER |
-    postfix_expression INCREMENT |
-    postfix_expression DECREMENT
+    postfix_expression '[' expression ']' { $$ = create_array_reference_node($1, $3); } |
+    postfix_expression '.' IDENTIFIER { $$ = create_component_reference_node($1, $3, AST_VALUE); } |
+    postfix_expression POINTER IDENTIFIER { $$ = create_component_reference_node($1, $3, AST_REFERENCE); } |
+    postfix_expression INCREMENT { $$ = create_postincrement_node($1); } |
+    postfix_expression DECREMENT { $$ = create_postdecrement_node($1); }
     ;
 
 primary_expression:
