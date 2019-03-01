@@ -3,6 +3,19 @@
 #include "ast.h"
 
 struct astnode *
+create_compound_expression_node(
+    struct astnode *first_expression,
+    struct astnode *second_expression)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_COMPOUND_EXPRESSION;
+    node->first_expression = first_expression;
+    node->second_expression = second_expression;
+    return node;
+}
+
+struct astnode *
 create_modify_expression_node(
     struct astnode *modify_identifier,
     struct astnode *assignment_expression)

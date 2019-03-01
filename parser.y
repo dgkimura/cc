@@ -255,7 +255,7 @@ jump_statement:
 
 expression:
     assignment_expression |
-    expression ',' assignment_expression
+    expression ',' assignment_expression { $$ = create_compound_expression_node($1, $3); }
     ;
 
 assignment_expression:
