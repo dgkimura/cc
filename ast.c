@@ -2,14 +2,15 @@
 
 #include "ast.h"
 
-struct astnode *
-create_label_declaration_node(
-    char *label)
+struct astnode *create_jump_statement_node(
+    enum jump_type jumptype,
+    struct astnode *return_expression)
 {
     struct astnode *node;
     node = (struct astnode *)malloc(sizeof(struct astnode));
-    node->type = AST_LABEL_DECLARATION;
-    node->label = label;
+    node->type = AST_JUMP_STATEMENT;
+    node->jumptype = jumptype;
+    node->return_expression = return_expression;
     return node;
 }
 

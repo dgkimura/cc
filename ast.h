@@ -5,7 +5,7 @@
 
 enum astnode_type
 {
-    AST_LABEL_DECLARATION,
+    AST_JUMP_STATEMENT,
     AST_COMPOUND_EXPRESSION,
     AST_MODIFY_EXPRESSION,
     AST_CONDITIONAL_EXPRESSION,
@@ -21,6 +21,14 @@ enum astnode_type
     AST_IDENTIFIER_TYPE,
     AST_INTEGER_TYPE,
     AST_CHARACTER_TYPE
+};
+
+enum jump_type
+{
+    AST_GOTO,
+    AST_CONTINUE,
+    AST_BREAK,
+    AST_RETURN
 };
 
 enum reference_type
@@ -74,6 +82,8 @@ struct astnode
         struct
         {
             char *label;
+            struct astnode *return_expression;
+            enum jump_type jumptype;
         };
         /* compound expression */
         struct
@@ -128,8 +138,9 @@ struct astnode
     };
 };
 
-struct astnode *create_label_declaration_node(
-    char *label);
+struct astnode *create_jump_statement_node(
+    enum jump_type jumptype,
+    struct astnode *return_expression); 
 
 struct astnode *create_compound_expression_node(
     struct astnode *first_expression,

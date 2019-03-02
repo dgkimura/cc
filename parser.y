@@ -34,7 +34,7 @@ void yyerror(const char *s);
     struct astnode *node;
 }
 
-%type <node> expression assignment_expression conditional_expression logical_or_expression logical_and_expression inclusive_or_expression exclusive_or_expression and_expression equality_expression relational_expression shift_expression additive_expression multiplicative_expression cast_expression unary_expression postfix_expression primary_expression constant
+%type <node> jump_statement expression assignment_expression conditional_expression logical_or_expression logical_and_expression inclusive_or_expression exclusive_or_expression and_expression equality_expression relational_expression shift_expression additive_expression multiplicative_expression cast_expression unary_expression postfix_expression primary_expression constant
 %type <integer> INTEGER
 %type <string> IDENTIFIER
 %type <character> CHARACTER_CONSTANT
@@ -246,11 +246,11 @@ iteration_statement:
     ;
 
 jump_statement:
-    GOTO IDENTIFIER |
-    CONTINUE ';' |
-    BREAK ';' |
-    RETURN ';' |
-    RETURN expression ';'
+    GOTO IDENTIFIER { $$ = create_jump_statement_node(AST_GOTO, NULL); } |
+    CONTINUE ';' { $$ = create_jump_statement_node(AST_CONTINUE, NULL); } |
+    BREAK ';' { $$ = create_jump_statement_node(AST_BREAK, NULL); } |
+    RETURN ';' { $$ = create_jump_statement_node(AST_RETURN, NULL); } |
+    RETURN expression ';' { $$ = create_jump_statement_node(AST_RETURN, $2); }
     ;
 
 expression:
