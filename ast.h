@@ -5,6 +5,7 @@
 
 enum astnode_type
 {
+    AST_LABEL_DECLARATION,
     AST_COMPOUND_EXPRESSION,
     AST_MODIFY_EXPRESSION,
     AST_CONDITIONAL_EXPRESSION,
@@ -69,6 +70,11 @@ struct astnode
      */
     union
     {
+        /* jump statement */
+        struct
+        {
+            char *label;
+        };
         /* compound expression */
         struct
         {
@@ -121,6 +127,9 @@ struct astnode
         };
     };
 };
+
+struct astnode *create_label_declaration_node(
+    char *label);
 
 struct astnode *create_compound_expression_node(
     struct astnode *first_expression,

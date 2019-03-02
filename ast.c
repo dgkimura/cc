@@ -3,6 +3,17 @@
 #include "ast.h"
 
 struct astnode *
+create_label_declaration_node(
+    char *label)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_LABEL_DECLARATION;
+    node->label = label;
+    return node;
+}
+
+struct astnode *
 create_compound_expression_node(
     struct astnode *first_expression,
     struct astnode *second_expression)
