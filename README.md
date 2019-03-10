@@ -10,3 +10,19 @@ $ mkdir build && cd build
 $ cmake ..
 $ make
 ```
+
+## Usage
+```
+cat <<EOF > code.c
+int factorial(int n)
+{
+    int i, result;
+    for (i=1, result=0; i<=n; i++)
+    {
+        result *= i;
+    }
+    return result;
+}
+EOF
+$ cc code.c
+```
