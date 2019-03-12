@@ -23,6 +23,15 @@ enum astnode_type
     AST_CHARACTER_TYPE
 };
 
+enum ast_storage_class_specifier
+{
+    AST_AUTO,
+    AST_REGISTER,
+    AST_STATIC,
+    AST_EXTERN,
+    AST_TYPEDEF
+};
+
 enum jump_type
 {
     AST_GOTO,
