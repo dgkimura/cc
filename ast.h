@@ -1,3 +1,6 @@
+#ifndef __AST_H__
+#define __AST_H__
+
 /*
  * An astnode represents one of the following concepts in C: data type,
  * variable, expression, or statement.
@@ -201,3 +204,5 @@ struct astnode *create_integer_node(
 
 struct astnode *create_character_node(
     char character);
+
+#endif
