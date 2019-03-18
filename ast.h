@@ -26,6 +26,12 @@ enum astnode_type
     AST_CHARACTER_TYPE
 };
 
+enum ast_type_qualifier
+{
+    AST_CONST,
+    AST_VOLATILE
+};
+
 enum ast_storage_class_specifier
 {
     AST_AUTO,
