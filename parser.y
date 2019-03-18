@@ -32,12 +32,14 @@ void yyerror(const char *s);
     char character;
     char *string;
     struct astnode *node;
+    int enumerator;
 }
 
 %type <node> jump_statement expression assignment_expression conditional_expression logical_or_expression logical_and_expression inclusive_or_expression exclusive_or_expression and_expression equality_expression relational_expression shift_expression additive_expression multiplicative_expression cast_expression unary_expression postfix_expression primary_expression constant
 %type <integer> INTEGER
 %type <string> IDENTIFIER
 %type <character> CHARACTER_CONSTANT
+%type <enumerator> type_qualifier;
 
 %%
 
@@ -87,7 +89,7 @@ type_specifier:
     ;
 
 type_qualifier:
-    CONST | VOLATILE
+    CONST { $$ = AST_CONST; } | VOLATILE { $$ = AST_VOLATILE; }
     ;
 
 struct_or_union_specifier:
