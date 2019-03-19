@@ -2,6 +2,19 @@
 
 #include "ast.h"
 
+struct astnode *
+create_enumerator_node(
+    char *enumerator_identifier,
+    struct astnode *enumerator_value)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_ENUMERATOR_NODE;
+    node->enumerator_identifier = enumerator_identifier;
+    node->enumerator_value = enumerator_value;
+    return node;
+}
+
 struct astnode *create_jump_statement_node(
     enum jump_type jumptype,
     struct astnode *return_expression)

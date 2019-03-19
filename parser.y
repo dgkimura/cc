@@ -35,11 +35,11 @@ void yyerror(const char *s);
     int enumerator;
 }
 
-%type <node> jump_statement expression assignment_expression conditional_expression logical_or_expression logical_and_expression inclusive_or_expression exclusive_or_expression and_expression equality_expression relational_expression shift_expression additive_expression multiplicative_expression cast_expression unary_expression postfix_expression primary_expression constant
+%type <node> enumerator constant_expression jump_statement expression assignment_expression conditional_expression logical_or_expression logical_and_expression inclusive_or_expression exclusive_or_expression and_expression equality_expression relational_expression shift_expression additive_expression multiplicative_expression cast_expression unary_expression postfix_expression primary_expression constant
 %type <integer> INTEGER
 %type <string> IDENTIFIER
 %type <character> CHARACTER_CONSTANT
-%type <enumerator> type_qualifier;
+%type <enumerator> storage_class_specifier type_qualifier;
 
 %%
 
@@ -81,7 +81,7 @@ declaration_specifiers:
     ;
 
 storage_class_specifier:
-    AUTO | REGISTER | STATIC | EXTERN | TYPEDEF
+    AUTO { $$ = AST_AUTO; } | REGISTER { $$ = AST_REGISTER; } | STATIC { $$ = AST_STATIC; }| EXTERN { $$ = AST_EXTERN; } | TYPEDEF { $$ = AST_TYPEDEF; }
     ;
 
 type_specifier:
@@ -150,8 +150,8 @@ enumerator_list:
     ;
 
 enumerator:
-    IDENTIFIER |
-    IDENTIFIER '=' constant_expression
+    IDENTIFIER { $$ = create_enumerator_node($1, NULL); } |
+    IDENTIFIER '=' constant_expression { $$ = create_enumerator_node($1, $3); }
     ;
 
 declarator:

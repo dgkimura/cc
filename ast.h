@@ -8,6 +8,7 @@
 
 enum astnode_type
 {
+    AST_ENUMERATOR_NODE,
     AST_JUMP_STATEMENT,
     AST_COMPOUND_EXPRESSION,
     AST_MODIFY_EXPRESSION,
@@ -96,6 +97,12 @@ struct astnode
      */
     union
     {
+        /* enumerator node */
+        struct
+        {
+            char *enumerator_identifier;
+            struct astnode *enumerator_value;
+        };
         /* jump statement */
         struct
         {
@@ -155,6 +162,10 @@ struct astnode
         };
     };
 };
+
+struct astnode *create_enumerator_node(
+    char *enumerator_identifier,
+    struct astnode *enumerator_value);
 
 struct astnode *create_jump_statement_node(
     enum jump_type jumptype,
