@@ -35,7 +35,7 @@ void yyerror(const char *s);
     int enumerator;
 }
 
-%type <node> enumerator constant_expression jump_statement expression assignment_expression conditional_expression logical_or_expression logical_and_expression inclusive_or_expression exclusive_or_expression and_expression equality_expression relational_expression shift_expression additive_expression multiplicative_expression cast_expression unary_expression postfix_expression primary_expression constant
+%type <node> enum_specifier enumerator_list enumerator constant_expression jump_statement expression assignment_expression conditional_expression logical_or_expression logical_and_expression inclusive_or_expression exclusive_or_expression and_expression equality_expression relational_expression shift_expression additive_expression multiplicative_expression cast_expression unary_expression postfix_expression primary_expression constant
 %type <integer> INTEGER
 %type <string> IDENTIFIER
 %type <character> CHARACTER_CONSTANT
@@ -140,13 +140,13 @@ struct_declarator:
     ;
 
 enum_specifier:
-    ENUM IDENTIFIER '{' enumerator_list '}' |
-    ENUM IDENTIFIER
+    ENUM IDENTIFIER '{' enumerator_list '}' { $$ = create_enum_specifier_node($2, $4); } |
+    ENUM IDENTIFIER { $$ = create_enum_specifier_node($2, NULL); }
     ;
 
 enumerator_list:
     enumerator |
-    enumerator_list ',' enumerator
+    enumerator_list ',' enumerator { $3->next = $1; $$ = $3; }
     ;
 
 enumerator:

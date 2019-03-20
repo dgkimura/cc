@@ -8,6 +8,7 @@
 
 enum astnode_type
 {
+    AST_ENUM_SPECIFIER_NODE,
     AST_ENUMERATOR_NODE,
     AST_JUMP_STATEMENT,
     AST_COMPOUND_EXPRESSION,
@@ -97,9 +98,16 @@ struct astnode
      */
     union
     {
+        /* enum_specifier node */
+        struct
+        {
+            char *enum_specifier_identifier;
+            struct astnode *enumerator_list;
+        };
         /* enumerator node */
         struct
         {
+            struct astnode *next;
             char *enumerator_identifier;
             struct astnode *enumerator_value;
         };
@@ -162,6 +170,10 @@ struct astnode
         };
     };
 };
+
+struct astnode *create_enum_specifier_node(
+    char *enum_specifier_identifier,
+    struct astnode *enumerator_list);
 
 struct astnode *create_enumerator_node(
     char *enumerator_identifier,

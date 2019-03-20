@@ -3,6 +3,19 @@
 #include "ast.h"
 
 struct astnode *
+create_enum_specifier_node(
+    char *enum_specifier_identifier,
+    struct astnode *enumerator_list)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_ENUM_SPECIFIER_NODE;
+    node->enum_specifier_identifier = enum_specifier_identifier;
+    node->enumerator_list = enumerator_list;
+    return node;
+}
+
+struct astnode *
 create_enumerator_node(
     char *enumerator_identifier,
     struct astnode *enumerator_value)
