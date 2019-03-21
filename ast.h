@@ -43,6 +43,19 @@ enum ast_storage_class_specifier
     AST_TYPEDEF
 };
 
+enum ast_type_specifier
+{
+    AST_VOID,
+    AST_CHAR,
+    AST_SHORT,
+    AST_INT,
+    AST_LONG,
+    AST_FLOAT,
+    AST_DOUBLE,
+    AST_SIGNED,
+    AST_UNSIGNED
+};
+
 enum jump_type
 {
     AST_GOTO,
