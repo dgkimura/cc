@@ -34,6 +34,12 @@ enum ast_type_qualifier
     AST_VOLATILE
 };
 
+enum ast_struct_or_union
+{
+    AST_STRUCT,
+    AST_UNION
+};
+
 enum ast_storage_class_specifier
 {
     AST_AUTO,

@@ -39,7 +39,7 @@ void yyerror(const char *s);
 %type <integer> INTEGER
 %type <string> IDENTIFIER
 %type <character> CHARACTER_CONSTANT
-%type <enumerator> storage_class_specifier type_qualifier;
+%type <enumerator> struct_or_union storage_class_specifier type_qualifier;
 
 %%
 
@@ -99,7 +99,7 @@ struct_or_union_specifier:
     ;
 
 struct_or_union:
-    STRUCT | UNION
+    STRUCT { $$ = AST_STRUCT; } | UNION { $$ = AST_UNION; }
     ;
 
 struct_declaration_list:
