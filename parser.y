@@ -35,7 +35,7 @@ void yyerror(const char *s);
     int enumerator;
 }
 
-%type <node> enum_specifier enumerator_list enumerator constant_expression jump_statement expression assignment_expression conditional_expression logical_or_expression logical_and_expression inclusive_or_expression exclusive_or_expression and_expression equality_expression relational_expression shift_expression additive_expression multiplicative_expression cast_expression unary_expression postfix_expression primary_expression constant
+%type <node> type_specifier enum_specifier enumerator_list enumerator constant_expression jump_statement expression assignment_expression conditional_expression logical_or_expression logical_and_expression inclusive_or_expression exclusive_or_expression and_expression equality_expression relational_expression shift_expression additive_expression multiplicative_expression cast_expression unary_expression postfix_expression primary_expression constant
 %type <integer> INTEGER
 %type <string> IDENTIFIER
 %type <character> CHARACTER_CONSTANT
@@ -85,7 +85,17 @@ storage_class_specifier:
     ;
 
 type_specifier:
-    VOID | CHAR | SHORT | INT | LONG | FLOAT | DOUBLE | SIGNED | UNSIGNED | struct_or_union_specifier | enum_specifier
+    VOID { $$ = create_type_specifier_node(AST_VOID, NULL); } |
+    CHAR { $$ = create_type_specifier_node(AST_CHAR, NULL); } |
+    SHORT { $$ = create_type_specifier_node(AST_SHORT, NULL); } |
+    INT { $$ = create_type_specifier_node(AST_INT, NULL); } |
+    LONG { $$ = create_type_specifier_node(AST_LONG, NULL); } |
+    FLOAT { $$ = create_type_specifier_node(AST_FLOAT, NULL); } |
+    DOUBLE { $$ = create_type_specifier_node(AST_DOUBLE, NULL); } |
+    SIGNED { $$ = create_type_specifier_node(AST_SIGNED, NULL); } |
+    UNSIGNED { $$ = create_type_specifier_node(AST_UNSIGNED, NULL); } |
+    struct_or_union_specifier { $$ = create_type_specifier_node(AST_NONE, NULL/*FIXME: $1*/); } |
+    enum_specifier
     ;
 
 type_qualifier:

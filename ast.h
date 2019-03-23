@@ -8,6 +8,7 @@
 
 enum astnode_type
 {
+    AST_TYPE_SPECIFIER_NODE,
     AST_ENUM_SPECIFIER_NODE,
     AST_ENUMERATOR_NODE,
     AST_JUMP_STATEMENT,
@@ -51,6 +52,7 @@ enum ast_storage_class_specifier
 
 enum ast_type_specifier
 {
+    AST_NONE, /* Signals enum, struct, or union  */
     AST_VOID,
     AST_CHAR,
     AST_SHORT,
@@ -117,6 +119,12 @@ struct astnode
      */
     union
     {
+        /* type_specifier node */
+        struct
+        {
+            enum ast_type_specifier type_specifier_enum;
+            struct astnode *type_specifier_node;
+        };
         /* enum_specifier node */
         struct
         {
@@ -189,6 +197,10 @@ struct astnode
         };
     };
 };
+
+struct astnode *create_type_specifier_node(
+    enum ast_type_specifier type_specifier_enum,
+    struct astnode *type_specifier_node);
 
 struct astnode *create_enum_specifier_node(
     char *enum_specifier_identifier,

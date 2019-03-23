@@ -2,6 +2,18 @@
 
 #include "ast.h"
 
+struct astnode *create_type_specifier_node(
+    enum ast_type_specifier type_specifier_enum,
+    struct astnode *type_specifier_node)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_TYPE_SPECIFIER_NODE;
+    node->type_specifier_enum = type_specifier_enum;
+    node->type_specifier_node = type_specifier_node;
+    return node;
+}
+
 struct astnode *
 create_enum_specifier_node(
     char *enum_specifier_identifier,
