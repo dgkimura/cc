@@ -41,9 +41,11 @@ enum ast_struct_or_union
     AST_UNION
 };
 
+#define AST_NONE -1 /* Signals enum, struct, or union  */
+
 enum ast_storage_class_specifier
 {
-    AST_AUTO,
+    AST_AUTO = 0,
     AST_REGISTER,
     AST_STATIC,
     AST_EXTERN,
@@ -52,8 +54,7 @@ enum ast_storage_class_specifier
 
 enum ast_type_specifier
 {
-    AST_NONE, /* Signals enum, struct, or union  */
-    AST_VOID,
+    AST_VOID = 0,
     AST_CHAR,
     AST_SHORT,
     AST_INT,
