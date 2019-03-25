@@ -35,11 +35,11 @@ void yyerror(const char *s);
     int enumerator;
 }
 
-%type <node> type_specifier enum_specifier enumerator_list enumerator constant_expression jump_statement expression assignment_expression conditional_expression logical_or_expression logical_and_expression inclusive_or_expression exclusive_or_expression and_expression equality_expression relational_expression shift_expression additive_expression multiplicative_expression cast_expression unary_expression postfix_expression primary_expression constant
+%type <node> storage_class_specifier type_specifier type_qualifier enum_specifier enumerator_list enumerator constant_expression jump_statement expression assignment_expression conditional_expression logical_or_expression logical_and_expression inclusive_or_expression exclusive_or_expression and_expression equality_expression relational_expression shift_expression additive_expression multiplicative_expression cast_expression unary_expression postfix_expression primary_expression constant
 %type <integer> INTEGER
 %type <string> IDENTIFIER
 %type <character> CHARACTER_CONSTANT
-%type <enumerator> struct_or_union storage_class_specifier type_qualifier;
+%type <enumerator> struct_or_union;
 
 %%
 
@@ -81,7 +81,11 @@ declaration_specifiers:
     ;
 
 storage_class_specifier:
-    AUTO { $$ = AST_AUTO; } | REGISTER { $$ = AST_REGISTER; } | STATIC { $$ = AST_STATIC; }| EXTERN { $$ = AST_EXTERN; } | TYPEDEF { $$ = AST_TYPEDEF; }
+    AUTO { $$ = create_storage_class_specifier_node(AST_AUTO); } |
+    REGISTER { $$ = create_storage_class_specifier_node(AST_REGISTER); } |
+    STATIC { $$ = create_storage_class_specifier_node(AST_STATIC); } |
+    EXTERN { $$ = create_storage_class_specifier_node(AST_EXTERN); } |
+    TYPEDEF { $$ = create_storage_class_specifier_node(AST_TYPEDEF); }
     ;
 
 type_specifier:
@@ -99,7 +103,8 @@ type_specifier:
     ;
 
 type_qualifier:
-    CONST { $$ = AST_CONST; } | VOLATILE { $$ = AST_VOLATILE; }
+    CONST { $$ = create_type_qualifier_node(AST_CONST); } |
+    VOLATILE { $$ = create_type_qualifier_node(AST_VOLATILE); }
     ;
 
 struct_or_union_specifier:

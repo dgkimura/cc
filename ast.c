@@ -2,6 +2,17 @@
 
 #include "ast.h"
 
+struct astnode *
+create_storage_class_specifier_node(
+    enum ast_storage_class_specifier storage_class_specifier_enum)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_STORAGE_CLASS_SPECIFIER_NODE;
+    node->storage_class_specifier_enum = storage_class_specifier_enum;
+    return node;
+}
+
 struct astnode *create_type_specifier_node(
     enum ast_type_specifier type_specifier_enum,
     struct astnode *type_specifier_node)
@@ -11,6 +22,17 @@ struct astnode *create_type_specifier_node(
     node->type = AST_TYPE_SPECIFIER_NODE;
     node->type_specifier_enum = type_specifier_enum;
     node->type_specifier_node = type_specifier_node;
+    return node;
+}
+
+struct astnode *
+create_type_qualifier_node(
+    enum ast_type_qualifier type_qualifier_enum)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_TYPE_QUALIFIER_NODE;
+    node->type_qualifier_enum = type_qualifier_enum;
     return node;
 }
 
