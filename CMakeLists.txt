@@ -11,4 +11,4 @@ add_flex_bison_dependency(MyScanner MyParser)
 include_directories(${CMAKE_BINARY_DIR})
 include_directories(${CMAKE_SOURCE_DIR})
 
-add_executable(cc ${BISON_MyParser_OUTPUTS} ${FLEX_MyScanner_OUTPUTS} ast.c main.c)
+add_executable(cc ${BISON_MyParser_OUTPUTS} ${FLEX_MyScanner_OUTPUTS} ast.c main.c list.c)
