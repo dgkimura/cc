@@ -1,6 +1,8 @@
 #ifndef __AST_H__
 #define __AST_H__
 
+#include "list.h"
+
 /*
  * An astnode represents one of the following concepts in C: data type,
  * variable, expression, or statement.
@@ -8,6 +10,7 @@
 
 enum astnode_type
 {
+    AST_DECLARATION_SPECIFIERS,
     AST_STORAGE_CLASS_SPECIFIER_NODE,
     AST_TYPE_SPECIFIER_NODE,
     AST_TYPE_QUALIFIER_NODE,
@@ -122,6 +125,11 @@ struct astnode
      */
     union
     {
+        /* declaration_specifiers node */
+        struct
+        {
+            struct listnode *declaration_specifiers_list;
+        };
         /* storage_class_specifier node */
         struct
         {
@@ -210,6 +218,10 @@ struct astnode
         };
     };
 };
+
+struct astnode *create_declaration_secifiers_node(
+    struct astnode *declaration_specifier,
+    struct astnode *specifier);
 
 struct astnode *create_storage_class_specifier_node(
     enum ast_storage_class_specifier storage_class_specifier_enum);

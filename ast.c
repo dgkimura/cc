@@ -1,6 +1,23 @@
 #include <stdlib.h>
 
 #include "ast.h"
+#include "list.h"
+
+struct astnode *
+create_declaration_secifiers_node(
+    struct astnode *declaration_specifier, struct astnode *specifier)
+{
+    struct astnode *node;
+    if (declaration_specifier == NULL)
+    {
+        node = (struct astnode *)malloc(sizeof(struct astnode));
+        node->type = AST_DECLARATION_SPECIFIERS;
+        list_init(&node->declaration_specifiers_list);
+    }
+
+    list_prepend(&node->declaration_specifiers_list, specifier);
+    return node;
+}
 
 struct astnode *
 create_storage_class_specifier_node(
