@@ -4,6 +4,18 @@
 #include "list.h"
 
 struct astnode *
+create_parameter_declaration_node(
+    struct astnode *parameter_specifier, struct astnode *parameter_declarator)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_PARAMTER_DECLARATION;
+    node->parameter_specifier = parameter_specifier;
+    node->parameter_declarator = parameter_declarator;
+    return node;
+}
+
+struct astnode *
 create_declaration_secifiers_node(
     struct astnode *declaration_specifier, struct astnode *specifier)
 {

@@ -10,6 +10,7 @@
 
 enum astnode_type
 {
+    AST_PARAMTER_DECLARATION,
     AST_DECLARATION_SPECIFIERS,
     AST_STORAGE_CLASS_SPECIFIER_NODE,
     AST_TYPE_SPECIFIER_NODE,
@@ -125,6 +126,12 @@ struct astnode
      */
     union
     {
+        /* parameter_declaration node */
+        struct
+        {
+            struct astnode *parameter_specifier;
+            struct astnode *parameter_declarator;
+        };
         /* declaration_specifiers node */
         struct
         {
@@ -218,6 +225,10 @@ struct astnode
         };
     };
 };
+
+struct astnode * create_parameter_declaration_node(
+    struct astnode *parameter_specifier,
+    struct astnode *parameter_declarator);
 
 struct astnode *create_declaration_secifiers_node(
     struct astnode *declaration_specifier,
