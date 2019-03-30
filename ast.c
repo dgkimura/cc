@@ -4,6 +4,18 @@
 #include "list.h"
 
 struct astnode *
+create_parameter_type_list_node(
+    struct astnode *parameter_list, char va_op)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_PARAMTER_TYPE_LIST;
+    node->parameters = parameter_list;
+    node->va_op = va_op;
+    return node;
+}
+
+struct astnode *
 create_parameter_list_node(
     struct astnode *parameter_list, struct astnode *parameter_declaration)
 {
