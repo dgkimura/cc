@@ -10,6 +10,7 @@
 
 enum astnode_type
 {
+    AST_POINTER,
     AST_TYPE_QUALIFIER_LIST,
     AST_PARAMTER_TYPE_LIST,
     AST_PARAMTER_LIST,
@@ -129,6 +130,12 @@ struct astnode
      */
     union
     {
+        /* pointer node */
+        struct
+        {
+            struct astnode *pointer_type_qualifier_list;
+            struct astnode *pointer;
+        };
         /* type_qualifier_list node */
         struct
         {
@@ -244,6 +251,10 @@ struct astnode
         };
     };
 };
+
+struct astnode * create_pointer_node(
+    struct astnode *poitner_type_qualifier_list,
+    struct astnode *pointer);
 
 struct astnode *create_type_qualifier_list_node(
     struct astnode *type_qualifier_list,

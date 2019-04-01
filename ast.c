@@ -4,6 +4,18 @@
 #include "list.h"
 
 struct astnode *
+create_pointer_node(
+    struct astnode *pointer_type_qualifier_list, struct astnode *pointer)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_POINTER;
+    node->pointer_type_qualifier_list = pointer_type_qualifier_list;
+    node->pointer = pointer;
+    return node;
+}
+
+struct astnode *
 create_type_qualifier_list_node(
     struct astnode *type_qualifier_list, struct astnode *type_qualifier)
 {
