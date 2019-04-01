@@ -4,6 +4,22 @@
 #include "list.h"
 
 struct astnode *
+create_type_qualifier_list_node(
+    struct astnode *type_qualifier_list, struct astnode *type_qualifier)
+{
+    struct astnode *node;
+    if (type_qualifier_list == NULL)
+    {
+        node = (struct astnode *)malloc(sizeof(struct astnode));
+        node->type = AST_TYPE_QUALIFIER_LIST;
+        list_init(&node->type_qualifier_list);
+    }
+
+    list_prepend(&node->type_qualifier_list, type_qualifier);
+    return node;
+}
+
+struct astnode *
 create_parameter_type_list_node(
     struct astnode *parameter_list, char va_op)
 {

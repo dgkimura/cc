@@ -10,6 +10,7 @@
 
 enum astnode_type
 {
+    AST_TYPE_QUALIFIER_LIST,
     AST_PARAMTER_TYPE_LIST,
     AST_PARAMTER_LIST,
     AST_PARAMTER_DECLARATION,
@@ -243,6 +244,10 @@ struct astnode
         };
     };
 };
+
+struct astnode *create_type_qualifier_list_node(
+    struct astnode *type_qualifier_list,
+    struct astnode *type_qualifier);
 
 struct astnode * create_parameter_type_list_node(
     struct astnode *parameter_list, char va_op);
