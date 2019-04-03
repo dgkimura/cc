@@ -130,6 +130,14 @@ struct astnode
      */
     union
     {
+        /* direct_declarator node */
+        struct
+        {
+            char *direct_declarator_identifier;
+            struct astnode *direct_declarator;
+            struct astnode *constant_expression;
+            struct astnode *parameter_type_list;
+        };
         /* pointer node */
         struct
         {
@@ -251,6 +259,12 @@ struct astnode
         };
     };
 };
+
+struct astnode * create_direct_declarator_node(
+    char *direct_declarator_identifier,
+    struct astnode *direct_declarator,
+    struct astnode *constant_expression,
+    struct astnode *parameter_type_list);
 
 struct astnode * create_pointer_node(
     struct astnode *poitner_type_qualifier_list,

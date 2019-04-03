@@ -4,6 +4,22 @@
 #include "list.h"
 
 struct astnode *
+create_direct_declarator_node(
+    char *identifier, struct astnode *direct_declarator,
+    struct astnode *constant_expression, struct astnode *parameter_type_list)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_POINTER;
+
+    node->direct_declarator_identifier = identifier;
+    node->direct_declarator = direct_declarator;
+    node->constant_expression = constant_expression;
+    node->parameter_type_list = parameter_type_list;
+    return node;
+}
+
+struct astnode *
 create_pointer_node(
     struct astnode *pointer_type_qualifier_list, struct astnode *pointer)
 {
