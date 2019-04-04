@@ -10,6 +10,8 @@
 
 enum astnode_type
 {
+    AST_INIT_DECLARATOR,
+    AST_DECLARATOR,
     AST_POINTER,
     AST_TYPE_QUALIFIER_LIST,
     AST_PARAMTER_TYPE_LIST,
@@ -130,6 +132,12 @@ struct astnode
      */
     union
     {
+        /* init_declarator node */
+        struct
+        {
+            struct astnode *init_declarator_declarator;
+            struct astnode *init_declarator_initializer;
+        };
         /* declarator node */
         struct
         {
@@ -260,6 +268,10 @@ struct astnode
         };
     };
 };
+
+struct astnode * create_init_declarator_node(
+    struct astnode *declarator,
+    struct astnode *initilizer);
 
 struct astnode * create_declarator_node(
     char *direct_declarator_identifier,

@@ -4,13 +4,27 @@
 #include "list.h"
 
 struct astnode *
+create_init_declarator_node(
+    struct astnode *declarator,
+    struct astnode *initilizer)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_INIT_DECLARATOR;
+
+    node->init_declarator_declarator = declarator;
+    node->init_declarator_initializer = initilizer;
+    return node;
+}
+
+struct astnode *
 create_declarator_node(
     char *identifier, struct astnode *direct_declarator,
     struct astnode *constant_expression, struct astnode *parameter_type_list)
 {
     struct astnode *node;
     node = (struct astnode *)malloc(sizeof(struct astnode));
-    node->type = AST_POINTER;
+    node->type = AST_DECLARATOR;
 
     node->direct_declarator_identifier = identifier;
     node->declarator_pointer = NULL;
