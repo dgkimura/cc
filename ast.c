@@ -4,7 +4,7 @@
 #include "list.h"
 
 struct astnode *
-create_direct_declarator_node(
+create_declarator_node(
     char *identifier, struct astnode *direct_declarator,
     struct astnode *constant_expression, struct astnode *parameter_type_list)
 {
@@ -13,6 +13,7 @@ create_direct_declarator_node(
     node->type = AST_POINTER;
 
     node->direct_declarator_identifier = identifier;
+    node->declarator_pointer = NULL;
     node->direct_declarator = direct_declarator;
     node->constant_expression = constant_expression;
     node->parameter_type_list = parameter_type_list;

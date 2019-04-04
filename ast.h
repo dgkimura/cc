@@ -130,13 +130,14 @@ struct astnode
      */
     union
     {
-        /* direct_declarator node */
+        /* declarator node */
         struct
         {
             char *direct_declarator_identifier;
             struct astnode *direct_declarator;
             struct astnode *constant_expression;
             struct astnode *parameter_type_list;
+            struct astnode *declarator_pointer;
         };
         /* pointer node */
         struct
@@ -260,7 +261,7 @@ struct astnode
     };
 };
 
-struct astnode * create_direct_declarator_node(
+struct astnode * create_declarator_node(
     char *direct_declarator_identifier,
     struct astnode *direct_declarator,
     struct astnode *constant_expression,
