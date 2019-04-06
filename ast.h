@@ -10,6 +10,7 @@
 
 enum astnode_type
 {
+    AST_DECLARATION,
     AST_INIT_DECLARATOR_LIST,
     AST_INIT_DECLARATOR,
     AST_DECLARATOR,
@@ -133,6 +134,12 @@ struct astnode
      */
     union
     {
+        /* declaration node */
+        struct
+        {
+            struct astnode *declaration_specifiers;
+            struct astnode *declaration_declarators;
+        };
         /* init_declarator_list node */
         struct
         {
@@ -275,21 +282,25 @@ struct astnode
     };
 };
 
-struct astnode * create_init_declarator_list_node(
+struct astnode *create_declaration_node(
+    struct astnode *declaration_specifiers,
+    struct astnode *declaration_declarators);
+
+struct astnode *create_init_declarator_list_node(
     struct astnode *init_declarator_list,
     struct astnode *declarator);
 
-struct astnode * create_init_declarator_node(
+struct astnode *create_init_declarator_node(
     struct astnode *declarator,
     struct astnode *initilizer);
 
-struct astnode * create_declarator_node(
+struct astnode *create_declarator_node(
     char *direct_declarator_identifier,
     struct astnode *direct_declarator,
     struct astnode *constant_expression,
     struct astnode *parameter_type_list);
 
-struct astnode * create_pointer_node(
+struct astnode *create_pointer_node(
     struct astnode *poitner_type_qualifier_list,
     struct astnode *pointer);
 

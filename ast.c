@@ -4,6 +4,20 @@
 #include "list.h"
 
 struct astnode *
+create_declaration_node(
+    struct astnode *declaration_specifiers,
+    struct astnode *declaration_declarators)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_DECLARATION;
+
+    node->declaration_specifiers = declaration_specifiers;
+    node->declaration_declarators = declaration_declarators;
+    return node;
+}
+
+struct astnode *
 create_init_declarator_list_node(
     struct astnode *init_declarator_list,
     struct astnode *declarator)
