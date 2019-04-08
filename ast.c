@@ -3,6 +3,22 @@
 #include "ast.h"
 #include "list.h"
 
+struct astnode *create_declaration_list_node(
+    struct astnode *declaration_list,
+    struct astnode *declaration)
+{
+    struct astnode *node;
+    if (declaration_list == NULL)
+    {
+        node = (struct astnode *)malloc(sizeof(struct astnode));
+        node->type = AST_INIT_DECLARATOR_LIST;
+        list_init(&node->declaration_list);
+    }
+
+    list_prepend(&node->declaration_list, declaration);
+    return node;
+}
+
 struct astnode *
 create_declaration_node(
     struct astnode *declaration_specifiers,

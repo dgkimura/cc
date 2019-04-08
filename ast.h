@@ -134,6 +134,11 @@ struct astnode
      */
     union
     {
+        /* declaration_list node */
+        struct
+        {
+            struct listnode *declaration_list;
+        };
         /* declaration node */
         struct
         {
@@ -281,6 +286,10 @@ struct astnode
         };
     };
 };
+
+struct astnode *create_declaration_list_node(
+    struct astnode *declaration_list,
+    struct astnode *declaration);
 
 struct astnode *create_declaration_node(
     struct astnode *declaration_specifiers,
