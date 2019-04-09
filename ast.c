@@ -3,6 +3,23 @@
 #include "ast.h"
 #include "list.h"
 
+struct astnode *create_iteration_statement_node(
+    struct astnode *expression1,
+    struct astnode *expression2,
+    struct astnode *expression3,
+    struct astnode *iteration_statement)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_ITERATION_STATEMENT;
+
+    node->expression1 = expression1;
+    node->expression2 = expression2;
+    node->expression3 = expression3;
+    node->iteration_statement = iteration_statement;
+    return node;
+}
+
 struct astnode *create_declaration_list_node(
     struct astnode *declaration_list,
     struct astnode *declaration)

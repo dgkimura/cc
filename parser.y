@@ -35,7 +35,7 @@ void yyerror(const char *s);
     int enumerator;
 }
 
-%type <node> declaration_list declaration init_declarator_list init_declarator initializer declarator direct_declarator pointer type_qualifier_list parameter_type_list parameter_list parameter_declaration declaration_specifiers storage_class_specifier type_specifier type_qualifier enum_specifier enumerator_list enumerator constant_expression jump_statement expression assignment_expression conditional_expression logical_or_expression logical_and_expression inclusive_or_expression exclusive_or_expression and_expression equality_expression relational_expression shift_expression additive_expression multiplicative_expression cast_expression unary_expression postfix_expression primary_expression constant
+%type <node> iteration_statement declaration_list declaration init_declarator_list init_declarator initializer declarator direct_declarator pointer type_qualifier_list parameter_type_list parameter_list parameter_declaration declaration_specifiers storage_class_specifier type_specifier type_qualifier enum_specifier enumerator_list enumerator constant_expression jump_statement expression assignment_expression conditional_expression logical_or_expression logical_and_expression inclusive_or_expression exclusive_or_expression and_expression equality_expression relational_expression shift_expression additive_expression multiplicative_expression cast_expression unary_expression postfix_expression primary_expression constant
 %type <integer> INTEGER
 %type <string> IDENTIFIER
 %type <character> CHARACTER_CONSTANT
@@ -251,15 +251,15 @@ selection_statement:
     ;
 
 iteration_statement:
-    WHILE '(' expression ')' statement |
-    DO statement WHILE '(' expression')' ';' |
-    FOR '(' ';' ';' ')' statement |
-    FOR '(' expression ';' ';' ')' statement |
-    FOR '(' expression ';' expression ';' ')' statement |
-    FOR '(' expression ';' expression ';' expression ')' statement |
-    FOR '(' ';' expression ';' ')' statement |
-    FOR '(' ';' expression ';' expression ')' statement |
-    FOR '(' ';' ';' expression ')' statement
+    WHILE '(' expression ')' statement { $$ = create_iteration_statement_node(NULL, $3, NULL, /*FIXME:$5*/NULL); } |
+    DO statement WHILE '(' expression')' ';' { $$ = create_iteration_statement_node(NULL, /*FIXME:$2*/NULL, NULL, $5); } |
+    FOR '(' ';' ';' ')' statement { $$ = create_iteration_statement_node(NULL, NULL, NULL, /*FIXME:$6*/NULL); } |
+    FOR '(' expression ';' ';' ')' statement { $$ = create_iteration_statement_node($3, NULL, NULL, /*FIXME:$7*/NULL); } |
+    FOR '(' expression ';' expression ';' ')' statement { $$ = create_iteration_statement_node($3, $5, NULL, /*FIXME:$8*/NULL); } |
+    FOR '(' expression ';' expression ';' expression ')' statement { $$ = create_iteration_statement_node($3, $5, $7, /*FIXME:$9*/NULL); } |
+    FOR '(' ';' expression ';' ')' statement { $$ = create_iteration_statement_node(NULL, $4, NULL, /*FIXME:$7*/NULL); } |
+    FOR '(' ';' expression ';' expression ')' statement { $$ = create_iteration_statement_node(NULL, $4, $6, /*FIXME:$8*/NULL); } |
+    FOR '(' ';' ';' expression ')' statement { $$ = create_iteration_statement_node(NULL, NULL, $5, /*FIXME:$7*/NULL); }
     ;
 
 jump_statement:

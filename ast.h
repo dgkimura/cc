@@ -10,6 +10,7 @@
 
 enum astnode_type
 {
+    AST_ITERATION_STATEMENT,
     AST_DECLARATION,
     AST_INIT_DECLARATOR_LIST,
     AST_INIT_DECLARATOR,
@@ -134,6 +135,14 @@ struct astnode
      */
     union
     {
+        /* iteration_statement node */
+        struct
+        {
+            struct astnode *expression1;
+            struct astnode *expression2;
+            struct astnode *expression3;
+            struct astnode *iteration_statement;
+        };
         /* declaration_list node */
         struct
         {
@@ -286,6 +295,12 @@ struct astnode
         };
     };
 };
+
+struct astnode *create_iteration_statement_node(
+    struct astnode *expression1,
+    struct astnode *expression2,
+    struct astnode *expression3,
+    struct astnode *iteration_statement);
 
 struct astnode *create_declaration_list_node(
     struct astnode *declaration_list,
