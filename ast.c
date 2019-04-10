@@ -3,6 +3,17 @@
 #include "ast.h"
 #include "list.h"
 
+struct astnode *create_expression_statement_node(
+    struct astnode *expression)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_EXPRESSION_STATEMENT;
+
+    node->expression_statement = expression;
+    return node;
+}
+
 struct astnode *create_selection_statement_node(
     struct astnode *condition,
     struct astnode *statement,

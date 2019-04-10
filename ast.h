@@ -10,6 +10,7 @@
 
 enum astnode_type
 {
+    AST_EXPRESSION_STATEMENT,
     AST_SELECTION_STATEMENT,
     AST_ITERATION_STATEMENT,
     AST_DECLARATION,
@@ -136,6 +137,11 @@ struct astnode
      */
     union
     {
+        /* expression_statement node */
+        struct
+        {
+            struct astnode *expression_statement;
+        };
         /* selection_statement node */
         struct
         {
@@ -303,6 +309,9 @@ struct astnode
         };
     };
 };
+
+struct astnode *create_expression_statement_node(
+    struct astnode *expression);
 
 struct astnode *create_selection_statement_node(
     struct astnode *condition,
