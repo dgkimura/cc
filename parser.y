@@ -35,7 +35,7 @@ void yyerror(const char *s);
     int enumerator;
 }
 
-%type <node> iteration_statement declaration_list declaration init_declarator_list init_declarator initializer declarator direct_declarator pointer type_qualifier_list parameter_type_list parameter_list parameter_declaration declaration_specifiers storage_class_specifier type_specifier type_qualifier enum_specifier enumerator_list enumerator constant_expression jump_statement expression assignment_expression conditional_expression logical_or_expression logical_and_expression inclusive_or_expression exclusive_or_expression and_expression equality_expression relational_expression shift_expression additive_expression multiplicative_expression cast_expression unary_expression postfix_expression primary_expression constant
+%type <node> selection_statement iteration_statement declaration_list declaration init_declarator_list init_declarator initializer declarator direct_declarator pointer type_qualifier_list parameter_type_list parameter_list parameter_declaration declaration_specifiers storage_class_specifier type_specifier type_qualifier enum_specifier enumerator_list enumerator constant_expression jump_statement expression assignment_expression conditional_expression logical_or_expression logical_and_expression inclusive_or_expression exclusive_or_expression and_expression equality_expression relational_expression shift_expression additive_expression multiplicative_expression cast_expression unary_expression postfix_expression primary_expression constant
 %type <integer> INTEGER
 %type <string> IDENTIFIER
 %type <character> CHARACTER_CONSTANT
@@ -245,9 +245,9 @@ statement_list:
     ;
 
 selection_statement:
-    IF '(' expression ')' statement |
-    IF '(' expression ')' statement ELSE statement |
-    SWITCH '(' expression ')' statement
+    IF '(' expression ')' statement { $$ = create_selection_statement_node($3, /*FIXME:$5*/NULL, NULL); } |
+    IF '(' expression ')' statement ELSE statement { $$ = create_selection_statement_node($3, /*FIXME:$5*/NULL, /*FIXME:$7*/NULL); } |
+    SWITCH '(' expression ')' statement { $$ = create_selection_statement_node($3, /*FIXME:$5*/NULL, NULL); }
     ;
 
 iteration_statement:

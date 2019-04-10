@@ -3,6 +3,21 @@
 #include "ast.h"
 #include "list.h"
 
+struct astnode *create_selection_statement_node(
+    struct astnode *condition,
+    struct astnode *statement,
+    struct astnode *else_statement)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_CONDITIONAL_EXPRESSION;
+
+    node->conditional_expression = condition;
+    node->conditional_if_statement = statement;
+    node->conditional_else_statement = else_statement;
+    return node;
+}
+
 struct astnode *create_iteration_statement_node(
     struct astnode *expression1,
     struct astnode *expression2,
