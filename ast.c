@@ -3,6 +3,23 @@
 #include "ast.h"
 #include "list.h"
 
+struct astnode *create_labeled_statement_node(
+    enum label_type label,
+    struct astnode *statement,
+    struct astnode *case_expression,
+    char *identifier)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_LABELED_STATEMENT;
+
+    node->label_type = label;
+    node->labeled_statement = statement;
+    node->case_expression = case_expression;
+    node->label_identifier = identifier;
+    return node;
+}
+
 struct astnode *create_expression_statement_node(
     struct astnode *expression)
 {

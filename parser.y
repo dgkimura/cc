@@ -35,7 +35,7 @@ void yyerror(const char *s);
     int enumerator;
 }
 
-%type <node> expression_statement selection_statement iteration_statement declaration_list declaration init_declarator_list init_declarator initializer declarator direct_declarator pointer type_qualifier_list parameter_type_list parameter_list parameter_declaration declaration_specifiers storage_class_specifier type_specifier type_qualifier enum_specifier enumerator_list enumerator constant_expression jump_statement expression assignment_expression conditional_expression logical_or_expression logical_and_expression inclusive_or_expression exclusive_or_expression and_expression equality_expression relational_expression shift_expression additive_expression multiplicative_expression cast_expression unary_expression postfix_expression primary_expression constant
+%type <node> labeled_statement expression_statement selection_statement iteration_statement declaration_list declaration init_declarator_list init_declarator initializer declarator direct_declarator pointer type_qualifier_list parameter_type_list parameter_list parameter_declaration declaration_specifiers storage_class_specifier type_specifier type_qualifier enum_specifier enumerator_list enumerator constant_expression jump_statement expression assignment_expression conditional_expression logical_or_expression logical_and_expression inclusive_or_expression exclusive_or_expression and_expression equality_expression relational_expression shift_expression additive_expression multiplicative_expression cast_expression unary_expression postfix_expression primary_expression constant
 %type <integer> INTEGER
 %type <string> IDENTIFIER
 %type <character> CHARACTER_CONSTANT
@@ -222,9 +222,9 @@ statement:
     ;
 
 labeled_statement:
-     IDENTIFIER ':' statement |
-     CASE constant_expression ':' statement |
-     DEFAULT ':' statement
+     IDENTIFIER ':' statement { $$ = create_labeled_statement_node(AST_LABEL, /*FIXME:$3*/NULL, NULL, $1); } |
+     CASE constant_expression ':' statement { $$ = create_labeled_statement_node(AST_CASE_LABEL, /*FIXME:$4*/NULL, $2, NULL); } |
+     DEFAULT ':' statement { $$ = create_labeled_statement_node(AST_DEFAULT_LABEL, /*FIXME:$3*/NULL, NULL, NULL); }
      ;
 
 expression_statement:

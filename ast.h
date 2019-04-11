@@ -10,6 +10,7 @@
 
 enum astnode_type
 {
+    AST_LABELED_STATEMENT,
     AST_EXPRESSION_STATEMENT,
     AST_SELECTION_STATEMENT,
     AST_ITERATION_STATEMENT,
@@ -82,6 +83,13 @@ enum ast_type_specifier
     AST_UNSIGNED
 };
 
+enum label_type
+{
+    AST_LABEL,
+    AST_CASE_LABEL,
+    AST_DEFAULT_LABEL
+};
+
 enum jump_type
 {
     AST_GOTO,
@@ -137,6 +145,14 @@ struct astnode
      */
     union
     {
+        /* labeled_statement node */
+        struct
+        {
+            enum label_type label_type;
+            struct astnode *labeled_statement;
+            struct astnode *case_expression;
+            char *label_identifier;
+        };
         /* expression_statement node */
         struct
         {
@@ -309,6 +325,12 @@ struct astnode
         };
     };
 };
+
+struct astnode *create_labeled_statement_node(
+    enum label_type label,
+    struct astnode *statement,
+    struct astnode *case_expression,
+    char *identifier);
 
 struct astnode *create_expression_statement_node(
     struct astnode *expression);
