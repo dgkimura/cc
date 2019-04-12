@@ -3,6 +3,22 @@
 #include "ast.h"
 #include "list.h"
 
+struct astnode *create_statement_list_node(
+    struct astnode *statement_list,
+    struct astnode *statement)
+{
+    struct astnode *node;
+    if (statement_list == NULL)
+    {
+        node = (struct astnode *)malloc(sizeof(struct astnode));
+        node->type = AST_STATEMENT_LIST;
+        list_init(&node->declaration_list);
+    }
+
+    list_prepend(&node->statement_list, statement);
+    return node;
+}
+
 struct astnode *create_labeled_statement_node(
     enum label_type label,
     struct astnode *statement,

@@ -10,6 +10,7 @@
 
 enum astnode_type
 {
+    AST_STATEMENT_LIST,
     AST_LABELED_STATEMENT,
     AST_EXPRESSION_STATEMENT,
     AST_SELECTION_STATEMENT,
@@ -145,6 +146,11 @@ struct astnode
      */
     union
     {
+        /* statement_list node */
+        struct
+        {
+            struct listnode *statement_list;
+        };
         /* labeled_statement node */
         struct
         {
@@ -325,6 +331,10 @@ struct astnode
         };
     };
 };
+
+struct astnode *create_statement_list_node(
+    struct astnode *statement_list,
+    struct astnode *statement);
 
 struct astnode *create_labeled_statement_node(
     enum label_type label,
