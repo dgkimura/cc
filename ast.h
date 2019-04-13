@@ -10,6 +10,7 @@
 
 enum astnode_type
 {
+    AST_COMPOUND_STATEMENT,
     AST_STATEMENT_LIST,
     AST_LABELED_STATEMENT,
     AST_EXPRESSION_STATEMENT,
@@ -146,6 +147,12 @@ struct astnode
      */
     union
     {
+        /* compound_statement node */
+        struct
+        {
+            struct astnode *compound_statement_declaration_list;
+            struct astnode *compound_statement_statement_list;
+        };
         /* statement_list node */
         struct
         {
@@ -331,6 +338,10 @@ struct astnode
         };
     };
 };
+
+struct astnode *create_compound_statement_node(
+    struct astnode *declaration_list,
+    struct astnode *statement_list);
 
 struct astnode *create_statement_list_node(
     struct astnode *statement_list,

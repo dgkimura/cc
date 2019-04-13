@@ -3,6 +3,19 @@
 #include "ast.h"
 #include "list.h"
 
+struct astnode *create_compound_statement_node(
+    struct astnode *declaration_list,
+    struct astnode *statement_list)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_COMPOUND_STATEMENT;
+
+    node->compound_statement_declaration_list = declaration_list;
+    node->compound_statement_statement_list = statement_list;
+    return node;
+}
+
 struct astnode *create_statement_list_node(
     struct astnode *statement_list,
     struct astnode *statement)
