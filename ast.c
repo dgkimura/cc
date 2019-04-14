@@ -25,7 +25,7 @@ struct astnode *create_statement_list_node(
     {
         node = (struct astnode *)malloc(sizeof(struct astnode));
         node->type = AST_STATEMENT_LIST;
-        list_init(&node->declaration_list);
+        list_init(&node->statement_list);
     }
 
     list_prepend(&node->statement_list, statement);
