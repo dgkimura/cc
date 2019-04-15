@@ -35,7 +35,7 @@ void yyerror(const char *s);
     int enumerator;
 }
 
-%type <node> statement compound_statement statement_list labeled_statement expression_statement selection_statement iteration_statement declaration_list declaration init_declarator_list init_declarator initializer declarator direct_declarator pointer type_qualifier_list parameter_type_list parameter_list parameter_declaration declaration_specifiers storage_class_specifier type_specifier type_qualifier enum_specifier enumerator_list enumerator constant_expression jump_statement expression assignment_expression conditional_expression logical_or_expression logical_and_expression inclusive_or_expression exclusive_or_expression and_expression equality_expression relational_expression shift_expression additive_expression multiplicative_expression cast_expression unary_expression postfix_expression primary_expression constant
+%type <node> function_definition statement compound_statement statement_list labeled_statement expression_statement selection_statement iteration_statement declaration_list declaration init_declarator_list init_declarator initializer declarator direct_declarator pointer type_qualifier_list parameter_type_list parameter_list parameter_declaration declaration_specifiers storage_class_specifier type_specifier type_qualifier enum_specifier enumerator_list enumerator constant_expression jump_statement expression assignment_expression conditional_expression logical_or_expression logical_and_expression inclusive_or_expression exclusive_or_expression and_expression equality_expression relational_expression shift_expression additive_expression multiplicative_expression cast_expression unary_expression postfix_expression primary_expression constant
 %type <integer> INTEGER
 %type <string> IDENTIFIER
 %type <character> CHARACTER_CONSTANT
@@ -55,10 +55,10 @@ external_declaration:
     declaration;
 
 function_definition:
-    declarator compound_statement |
-    declarator declaration_list compound_statement |
-    declaration_specifiers declarator compound_statement |
-    declaration_specifiers declarator declaration_list compound_statement |
+    declarator compound_statement { $$ = create_function_declaration_statement_node(NULL, $1, NULL, $2); } |
+    declarator declaration_list compound_statement { $$ = create_function_declaration_statement_node(NULL, $1, $2, $3); } |
+    declaration_specifiers declarator compound_statement { $$ = create_function_declaration_statement_node($1, $2, NULL, $3); } |
+    declaration_specifiers declarator declaration_list compound_statement { $$ = create_function_declaration_statement_node($1, $2, $3, $4); }
     ;
 
 declaration:

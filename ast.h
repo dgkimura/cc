@@ -10,6 +10,7 @@
 
 enum astnode_type
 {
+    AST_FUNCTION_DECLARATION,
     AST_COMPOUND_STATEMENT,
     AST_STATEMENT_LIST,
     AST_LABELED_STATEMENT,
@@ -147,6 +148,14 @@ struct astnode
      */
     union
     {
+        /* function_definition node */
+        struct
+        {
+            struct astnode *function_declaration_specifiers;
+            struct astnode *function_declarator ;
+            struct astnode *function_declaration_list;
+            struct astnode *function_compound_statement;
+        };
         /* compound_statement node */
         struct
         {
@@ -338,6 +347,12 @@ struct astnode
         };
     };
 };
+
+struct astnode *create_function_declaration_statement_node(
+    struct astnode *function_declaration_specifiers,
+    struct astnode *function_declarator,
+    struct astnode *function_declaration_list,
+    struct astnode *function_compound_statement);
 
 struct astnode *create_compound_statement_node(
     struct astnode *declaration_list,

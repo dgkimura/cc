@@ -3,6 +3,24 @@
 #include "ast.h"
 #include "list.h"
 
+struct astnode *
+create_function_declaration_statement_node(
+    struct astnode *declaration_specifiers,
+    struct astnode *declarator,
+    struct astnode *declaration_list,
+    struct astnode *compound_statement)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_FUNCTION_DECLARATION;
+
+    node->function_declaration_specifiers = declaration_specifiers;
+    node->function_declarator = declarator;
+    node->function_declaration_list = declaration_list;
+    node->function_compound_statement = compound_statement;
+    return node;
+}
+
 struct astnode *create_compound_statement_node(
     struct astnode *declaration_list,
     struct astnode *statement_list)
