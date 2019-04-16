@@ -3,6 +3,19 @@
 #include "ast.h"
 #include "list.h"
 
+struct astnode *create_struct_declarator_node(
+    struct astnode *struct_declarator,
+    struct astnode *struct_constant_expression)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_STRUCT_DECLARATOR;
+
+    node->struct_declarator = struct_declarator;
+    node->struct_constant_expression = struct_constant_expression;
+    return node;
+}
+
 struct astnode *
 create_function_declaration_statement_node(
     struct astnode *declaration_specifiers,

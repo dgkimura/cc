@@ -10,6 +10,7 @@
 
 enum astnode_type
 {
+    AST_STRUCT_DECLARATOR,
     AST_FUNCTION_DECLARATION,
     AST_COMPOUND_STATEMENT,
     AST_STATEMENT_LIST,
@@ -148,6 +149,12 @@ struct astnode
      */
     union
     {
+        /* struct_declarator node */
+        struct
+        {
+            struct astnode *struct_declarator;
+            struct astnode *struct_constant_expression;
+        };
         /* function_definition node */
         struct
         {
@@ -347,6 +354,10 @@ struct astnode
         };
     };
 };
+
+struct astnode *create_struct_declarator_node(
+    struct astnode *struct_declarator,
+    struct astnode *struct_constant_expression);
 
 struct astnode *create_function_declaration_statement_node(
     struct astnode *function_declaration_specifiers,
