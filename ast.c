@@ -4,6 +4,23 @@
 #include "list.h"
 
 struct astnode *
+create_specifier_qualifer_list_node(
+    struct astnode *specifier_qualifier_list,
+    struct astnode *specifier_qualifier)
+{
+    struct astnode *node;
+    if (specifier_qualifier_list == NULL)
+    {
+        node = (struct astnode *)malloc(sizeof(struct astnode));
+        node->type = AST_STRUCT_DECLARATOR_LIST;
+        list_init(&node->specifier_qualifier_list);
+    }
+
+    list_prepend(&node->specifier_qualifier_list, specifier_qualifier);
+    return node;
+}
+
+struct astnode *
 create_struct_declarator_list_node(
     struct astnode *struct_declarator_list,
     struct astnode *struct_declarator)
@@ -52,7 +69,8 @@ create_function_declaration_statement_node(
     return node;
 }
 
-struct astnode *create_compound_statement_node(
+struct astnode *
+create_compound_statement_node(
     struct astnode *declaration_list,
     struct astnode *statement_list)
 {
