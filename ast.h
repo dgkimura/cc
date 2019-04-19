@@ -10,6 +10,7 @@
 
 enum astnode_type
 {
+    AST_STRUCT_DECLARATION,
     AST_SPECIFIER_QUALIFIER_LIST,
     AST_STRUCT_DECLARATOR_LIST,
     AST_STRUCT_DECLARATOR,
@@ -151,6 +152,12 @@ struct astnode
      */
     union
     {
+        /* struct_declaration node */
+        struct
+        {
+            struct astnode *struct_declaration_specifier_qualifier_list;
+            struct astnode *struct_declaration_declarator_list;
+        };
         /* specifier_qualifier_list node */
         struct
         {
@@ -366,6 +373,10 @@ struct astnode
         };
     };
 };
+
+struct astnode *create_struct_declaration_node(
+    struct astnode *specifier_qualifier_list,
+    struct astnode *declarator_list);
 
 struct astnode *create_specifier_qualifer_list_node(
     struct astnode *specifier_qualifier_list,
