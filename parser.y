@@ -35,7 +35,7 @@ void yyerror(const char *s);
     int enumerator;
 }
 
-%type <node> struct_declaration specifier_qualifier_list struct_declarator_list struct_declarator function_definition statement compound_statement statement_list labeled_statement expression_statement selection_statement iteration_statement declaration_list declaration init_declarator_list init_declarator initializer declarator direct_declarator pointer type_qualifier_list parameter_type_list parameter_list parameter_declaration declaration_specifiers storage_class_specifier type_specifier type_qualifier enum_specifier enumerator_list enumerator constant_expression jump_statement expression assignment_expression conditional_expression logical_or_expression logical_and_expression inclusive_or_expression exclusive_or_expression and_expression equality_expression relational_expression shift_expression additive_expression multiplicative_expression cast_expression unary_expression postfix_expression primary_expression constant
+%type <node> struct_declaration_list struct_declaration specifier_qualifier_list struct_declarator_list struct_declarator function_definition statement compound_statement statement_list labeled_statement expression_statement selection_statement iteration_statement declaration_list declaration init_declarator_list init_declarator initializer declarator direct_declarator pointer type_qualifier_list parameter_type_list parameter_list parameter_declaration declaration_specifiers storage_class_specifier type_specifier type_qualifier enum_specifier enumerator_list enumerator constant_expression jump_statement expression assignment_expression conditional_expression logical_or_expression logical_and_expression inclusive_or_expression exclusive_or_expression and_expression equality_expression relational_expression shift_expression additive_expression multiplicative_expression cast_expression unary_expression postfix_expression primary_expression constant
 %type <integer> INTEGER
 %type <string> IDENTIFIER
 %type <character> CHARACTER_CONSTANT
@@ -118,8 +118,8 @@ struct_or_union:
     ;
 
 struct_declaration_list:
-    struct_declaration |
-    struct_declaration_list struct_declaration
+    struct_declaration { $$ = create_struct_declaration_list_node(NULL, $1); } |
+    struct_declaration_list struct_declaration { $$ = create_struct_declaration_list_node($1, $2); }
     ;
 
 init_declarator_list:
