@@ -4,6 +4,22 @@
 #include "list.h"
 
 struct astnode *
+create_struct_or_union_specifier_node(
+    enum ast_struct_or_union struct_or_union,
+    char *struct_or_union_specifier_identifier,
+    struct astnode *struct_or_union_specifier_struct_declaration_list)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_STRUCT_OR_UNION_SPECIFIER;
+
+    node->struct_or_union = struct_or_union;
+    node->struct_or_union_specifier_identifier = struct_or_union_specifier_identifier;
+    node->struct_or_union_specifier_struct_declaration_list = struct_or_union_specifier_struct_declaration_list;
+    return node;
+}
+
+struct astnode *
 create_struct_declaration_list_node(
     struct astnode *struct_declaration_list,
     struct astnode *struct_declaration)

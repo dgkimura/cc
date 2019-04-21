@@ -10,6 +10,7 @@
 
 enum astnode_type
 {
+    AST_STRUCT_OR_UNION_SPECIFIER,
     AST_STRUCT_DECLARATION,
     AST_SPECIFIER_QUALIFIER_LIST,
     AST_STRUCT_DECLARATOR_LIST,
@@ -152,6 +153,13 @@ struct astnode
      */
     union
     {
+        /* struct_or_union_specifier node */
+        struct
+        {
+            enum ast_struct_or_union struct_or_union;
+            char *struct_or_union_specifier_identifier;
+            struct astnode *struct_or_union_specifier_struct_declaration_list;
+        };
         /* struct_declaration_list node */
         struct
         {
@@ -378,6 +386,11 @@ struct astnode
         };
     };
 };
+
+struct astnode *create_struct_or_union_specifier_node(
+    enum ast_struct_or_union struct_or_union,
+    char *struct_or_union_specifier_identifier,
+    struct astnode *struct_or_union_specifier_struct_declaration_list);
 
 struct astnode *create_struct_declaration_list_node(
     struct astnode *struct_declaration_list,
