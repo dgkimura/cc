@@ -532,7 +532,8 @@ struct astnode *create_binary_expression_node(
     enum binary_operand binaryop);
 
 struct astnode *create_unary_expression_node(
-    struct astnode *cast_expression);
+    struct astnode *cast_expression,
+    enum unary_operand unaryop);
 
 struct astnode *create_array_reference_node(
     struct astnode *postfix_expression,

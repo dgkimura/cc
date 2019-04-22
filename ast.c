@@ -498,13 +498,14 @@ create_binary_expression_node(
 
 struct astnode *
 create_unary_expression_node(
-    struct astnode *cast_expression)
+    struct astnode *cast_expression,
+    enum unary_operand unaryop)
 {
     struct astnode *node;
     node = (struct astnode *)malloc(sizeof(struct astnode));
     node->type = AST_UNARY_EXPRESSION;
     node->cast_expression = cast_expression;
-    //node->unaryop = unaryop;
+    node->unaryop = unaryop;
     return node;
 }
 

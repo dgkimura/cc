@@ -39,7 +39,7 @@ void yyerror(const char *s);
 %type <integer> INTEGER
 %type <string> IDENTIFIER
 %type <character> CHARACTER_CONSTANT
-%type <enumerator> struct_or_union;
+%type <enumerator> struct_or_union unary_operator;
 
 %%
 
@@ -98,7 +98,7 @@ type_specifier:
     DOUBLE { $$ = create_type_specifier_node(AST_DOUBLE, NULL); } |
     SIGNED { $$ = create_type_specifier_node(AST_SIGNED, NULL); } |
     UNSIGNED { $$ = create_type_specifier_node(AST_UNSIGNED, NULL); } |
-    struct_or_union_specifier { $$ = create_type_specifier_node(AST_NONE, NULL/*FIXME: $1*/); } |
+    struct_or_union_specifier { $$ = create_type_specifier_node(AST_NONE, $1); } |
     enum_specifier
     ;
 
@@ -359,11 +359,16 @@ unary_expression:
     postfix_expression |
     INCREMENT unary_expression { $$ = create_preincrement_node($2); } |
     DECREMENT unary_expression { $$ = create_predecrement_node($2); } |
-    unary_operator cast_expression { $$ = create_unary_expression_node($2); /*FIXME: pass unary_operator*/ }
+    unary_operator cast_expression { $$ = create_unary_expression_node($2, $1); }
     ;
 
 unary_operator:
-    '&' | '*' | '+' | '-' | '~' | '!'
+    '&' { $$ = AST_ADDRESS; } |
+    '*' { $$ = AST_DEREFERENCE; } |
+    '+' { $$ = AST_POSITIVE; } |
+    '-' { $$ = AST_NEGATIVE; } |
+    '~' { $$ = AST_BITWISE_NOT; } |
+    '!' { $$ = AST_NOT; }
 
 postfix_expression:
     primary_expression |
