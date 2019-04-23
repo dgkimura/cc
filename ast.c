@@ -4,6 +4,20 @@
 #include "list.h"
 
 struct astnode *
+create_external_declaration(
+    struct astnode *function_definition,
+    struct astnode *declaration)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_EXTERNAL_DECLARATION;
+
+    node->function_definition = function_definition;
+    node->declaration = declaration;
+    return node;
+}
+
+struct astnode *
 create_struct_or_union_specifier_node(
     enum ast_struct_or_union struct_or_union,
     char *struct_or_union_specifier_identifier,

@@ -10,6 +10,7 @@
 
 enum astnode_type
 {
+    AST_EXTERNAL_DECLARATION,
     AST_STRUCT_OR_UNION_SPECIFIER,
     AST_STRUCT_DECLARATION,
     AST_SPECIFIER_QUALIFIER_LIST,
@@ -153,6 +154,12 @@ struct astnode
      */
     union
     {
+        /* external_declaration node */
+        struct
+        {
+            struct astnode *function_definition;
+            struct astnode *declaration;
+        };
         /* struct_or_union_specifier node */
         struct
         {
@@ -386,6 +393,10 @@ struct astnode
         };
     };
 };
+
+struct astnode *create_external_declaration(
+struct astnode *function_definition,
+struct astnode *declaration);
 
 struct astnode *create_struct_or_union_specifier_node(
     enum ast_struct_or_union struct_or_union,
