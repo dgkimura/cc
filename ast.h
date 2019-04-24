@@ -154,6 +154,12 @@ struct astnode
      */
     union
     {
+        /* translation_unit node */
+        struct
+        {
+            struct astnode *translation_unit;
+            struct astnode *external_declaration;
+        };
         /* external_declaration node */
         struct
         {
@@ -394,9 +400,13 @@ struct astnode
     };
 };
 
-struct astnode *create_external_declaration(
-struct astnode *function_definition,
-struct astnode *declaration);
+struct astnode *create_translation_unit_node(
+    struct astnode *translation_unit,
+    struct astnode *external_declaration);
+
+struct astnode *create_external_declaration_node(
+    struct astnode *function_definition,
+    struct astnode *declaration);
 
 struct astnode *create_struct_or_union_specifier_node(
     enum ast_struct_or_union struct_or_union,

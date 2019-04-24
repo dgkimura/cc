@@ -4,7 +4,21 @@
 #include "list.h"
 
 struct astnode *
-create_external_declaration(
+create_translation_unit_node(
+    struct astnode *translation_unit,
+    struct astnode *external_declaration)
+{
+    struct astnode *node;
+    node = (struct astnode *)malloc(sizeof(struct astnode));
+    node->type = AST_EXTERNAL_DECLARATION;
+
+    node->translation_unit = translation_unit;
+    node->external_declaration = external_declaration;
+    return node;
+}
+
+struct astnode *
+create_external_declaration_node(
     struct astnode *function_definition,
     struct astnode *declaration)
 {
