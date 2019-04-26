@@ -47,7 +47,7 @@ void yyerror(const char *s);
 
 translation_unit:
     external_declaration { $$ = create_translation_unit_node(NULL, $1); astroot = $$; } |
-    translation_unit external_declaration { $$ = create_translation_unit_node($1, $2); astroot = $$ }
+    translation_unit external_declaration { $$ = create_translation_unit_node($1, $2); astroot = $$; }
     ;
 
 external_declaration:
