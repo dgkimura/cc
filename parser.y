@@ -46,8 +46,8 @@ void yyerror(const char *s);
 /* Grammar Rules */
 
 translation_unit:
-    external_declaration { $$ = create_translation_unit_node(NULL, $1); } |
-    translation_unit external_declaration { $$ = create_translation_unit_node($1, $2); }
+    external_declaration { $$ = create_translation_unit_node(NULL, $1); astroot = $$; } |
+    translation_unit external_declaration { $$ = create_translation_unit_node($1, $2); astroot = $$ }
     ;
 
 external_declaration:

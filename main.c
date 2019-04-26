@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+#include "ast.h"
 #include "parser.h"
 
 extern FILE *yyin;

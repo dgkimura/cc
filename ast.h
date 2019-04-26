@@ -3,6 +3,8 @@
 
 #include "list.h"
 
+struct astnode *astroot;
+
 /*
  * An astnode represents one of the following concepts in C: data type,
  * variable, expression, or statement.
