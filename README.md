@@ -13,7 +13,7 @@ $ make
 
 ## Usage
 ```
-cat <<EOF > code.c
+$ cat <<EOF > code.c
 int factorial(int n)
 {
     int i, result;
